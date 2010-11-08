@@ -91,6 +91,11 @@ class generic-tmpl::mw-sig {
   }
 
 
+  # Apache module for Mapserver
+  package {"libapache2-mod-fcgid": ensure => present, }
+  apache::module {"fcgid": ensure => present, }
+  
+
   # Custom projections in EPSG file
 
   line {"custom-epsg-proj-3785":
