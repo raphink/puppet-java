@@ -113,9 +113,9 @@ class generic-tmpl::mw-sig {
     line    => "<900913> +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs <>",
     require => Package["proj-data"],
   }
-  line {"custom-epsg-proj-27040":
+  line {"custom-epsg-proj-32640":
     file    => "/usr/share/proj/epsg",
-    line    => "<27040> +proj=utm +zone=40 +ellps=clrk80 +units=m +no_defs  no_defs <>",
+    line    => "<32640> +proj=utm +zone=40 +ellps=WGS84 +datum=WGS84 +units=m +no_defs no_defs <>",
     require => Package["proj-data"],
   }
 
