@@ -72,17 +72,17 @@ class generic-tmpl::mw-sig {
     default: { fail "Unsupported operatingsystem ${operatingsystem}" }
   }
 
+  include buildenv::c
   include python::dev
   include python::virtualenv
   include tilecache::base
 
   # Apache modules for MapFish
 
+  include apache::reverseproxy
+
   package {"libapache2-mod-wsgi": ensure => present, }
   apache::module {"headers": ensure => present, }
-  apache::module {"proxy": ensure => present, }
-  apache::module {"proxy_http": ensure => present, }
-  apache::module {"proxy_ajp": ensure => present, }
 
   # other packages for MapFish
 
