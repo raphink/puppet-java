@@ -72,6 +72,8 @@ class generic-tmpl::mw-sig {
     default: { fail "Unsupported operatingsystem ${operatingsystem}" }
   }
 
+  package {"libgdal1-1.5.0": ensure => purged, }
+
   include buildenv::c
   include python::dev
   include python::virtualenv
