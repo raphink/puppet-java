@@ -18,7 +18,7 @@ class generic-tmpl::mw-postgis-8-4 {
 
     Package["postgis"] {
       require +> [
-        Apt::Sources_list["sig-${lsbdistcodename}-postgresql-8.4"],
+        Apt::Sources_list["c2c-${lsbdistcodename}-${repository}-sig"],
         Apt::Key["5C662D02"],
       ]
     }
