@@ -9,7 +9,7 @@ class generic-tmpl::mw-postgis-8-4 {
     }
 
     Apt::Preferences["postgresql-8.4-postgis"] {
-      pin => "release o=c2c",
+      pin => "release o=Camptocamp",
     }
 
     Exec["create postgis_template"] {
