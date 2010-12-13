@@ -26,6 +26,14 @@ class generic-tmpl::os-debian-repository {
 
   case $lsbdistcodename {
     /lenny|squeeze/: {
+      if $repository == "" {
+        fail "Variable \$repository not set"
+      }
+
+      file { "/etc/apt/sources.list":
+        ensure => absent,
+        before => Exec["apt-get_update"],
+      }
 
       apt::sources_list { "$lsbdistcodename":
         content => "# file managed by puppet
