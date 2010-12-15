@@ -30,7 +30,7 @@ class generic-tmpl::mw-sig {
       priority => 1001,
     }
 
-    apt::preferences{["libgeos-c1", "libgeos-dev", "proj"]:
+    apt::preferences{["libgeos-c1", "proj"]:
       pin      => "release a=lenny-backports, o=Camptocamp",
       priority => 1001,
     }
@@ -41,7 +41,7 @@ class generic-tmpl::mw-sig {
         Package {
           require => [ Exec["apt-get_update"],
                        Apt::Sources_list["c2c-${lsbdistcodename}-${repository}-sig"],
-                       Apt::Preferences["sig", "sig-non-free", "libgeos-c1", "libgeos-dev", "proj"],
+                       Apt::Preferences["sig", "sig-non-free", "libgeos-c1", "proj"],
                      ],
         }
       }
@@ -58,7 +58,7 @@ class generic-tmpl::mw-sig {
         }
         Package {
           require => [ Exec["apt-get_update"],
-                       Apt::Sources_list["c2c-${lsbdistcodename}-${repository}-sig"], Apt::Preferences["sig", "sig-non-free", "libgeos-c1", "libgeos-dev", "proj"],
+                       Apt::Sources_list["c2c-${lsbdistcodename}-${repository}-sig"], Apt::Preferences["sig", "sig-non-free", "libgeos-c1", "proj"],
                        Apt::Sources_list["c2c-${lsbdistcodename}-${repository}-mapserver-5.6"], Apt::Preferences["mapserver-5.6"]
                      ],
         }
