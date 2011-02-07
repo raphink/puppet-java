@@ -12,11 +12,13 @@ class generic-tmpl::mw-sig {
 
   class c2c-mapserver inherits mapserver::debian {
 
-    # Camptocamp SIG sources list
-    apt::sources_list {"c2c-${lsbdistcodename}-${repository}-sig":
-      ensure  => present,
-      content => "deb http://pkg.camptocamp.net/${repository} ${lsbdistcodename} sig sig-non-free\n",
-      require => Apt::Key["5C662D02"],
+    if !defined(Apt::Sources_list["c2c-${lsbdistcodename}-${repository}-sig"]) {
+      # Camptocamp SIG sources list
+      apt::sources_list {"c2c-${lsbdistcodename}-${repository}-sig":
+        ensure  => present,
+        content => "deb http://pkg.camptocamp.net/${repository} ${lsbdistcodename} sig sig-non-free\n",
+        require => Apt::Key["5C662D02"],
+      }
     }
 
     apt::preferences{"sig":
