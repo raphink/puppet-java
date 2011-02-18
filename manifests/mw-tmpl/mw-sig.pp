@@ -53,7 +53,7 @@ class generic-tmpl::mw-sig {
           content => "deb http://pkg.camptocamp.net/${repository} ${lsbdistcodename} mapserver-5.6\n",
           require => Apt::Key["5C662D02"],
         }
-        apt::preferences{"mapserver-5.6":
+        apt::preferences{"mapserver-5_6":
           package  => "*",
           pin      => "release c=mapserver-5.6",
           priority => 1001,
