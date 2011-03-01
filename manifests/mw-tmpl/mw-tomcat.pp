@@ -1,7 +1,7 @@
 class generic-tmpl::mw-tomcat {
 
   # avoid partial configuration on untested-redhat-release
-  if $lsbdistcodename !~ /^(squeeze|squeeze)$/ {
+  if $lsbdistcodename !~ /^(lenny|squeeze)$/ {
     fail "class ${name} not tested on ${operatingsystem}/${lsbdistcodename}"
   }  
 
