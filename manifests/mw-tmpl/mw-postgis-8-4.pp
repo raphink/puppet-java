@@ -27,6 +27,7 @@ class generic-tmpl::mw-postgis-8-4 {
   case $lsbdistcodename {
     # Debian
     lenny :  { include c2c-postgis }
+    squeeze :  { include postgis }
 
     # Ubuntu
     lucid : { include postgis }
