@@ -9,7 +9,7 @@ class generic-tmpl::mw-tomcat {
     "lenny": {
       $tomcat_version = '6.0.26'
       include java::v6
-      include tomcat::v6
+      include tomcat::source
     }
     "squeeze": {
       include java
