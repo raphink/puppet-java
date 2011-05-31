@@ -55,13 +55,10 @@ deb http://mirror.switch.ch/ftp/mirror/debian-security/ ${lsbdistcodename}/updat
             require => Apt::Key["5C662D02"],
           }
       
-          # squeeze-backports n'existera que quand squeeze passera en stable
-          if $lsbdistcodename == "lenny" {
-            apt::sources_list {"c2c-${lsbdistcodename}-${repository}-backports":
+          apt::sources_list {"c2c-${lsbdistcodename}-${repository}-backports":
             ensure  => present,
             content => "deb http://pkg.camptocamp.net/${repository} ${lsbdistcodename}-backports main contrib non-free\n",
             require => Apt::Key["5C662D02"],
-            }
           }
         }
     
