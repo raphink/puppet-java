@@ -60,6 +60,10 @@ class generic-tmpl::mw-sig {
           priority => 1001,
         }
 
+        package {"nodejs":
+          ensure => present,
+        }
+
         package {"libgdal1-1.7.0":
           ensure => purged,
         }
