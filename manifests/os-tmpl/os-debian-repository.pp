@@ -2,7 +2,7 @@
 # == Template: os-debian-repository
 #
 # Cette classe met en place les principaux repositories utilisés par Camptocamp
-#  - officiel Debian
+#  - officiel Debian ou Ubuntu
 #  - paquets réalisés par Camptocamp (spécifique infra, component sysadmin)
 #  - debian-backports consolidé par Camptocamp
 # 
@@ -24,46 +24,74 @@
 #
 class generic-tmpl::os-debian-repository {
 
-  case $lsbdistcodename {
-    /lenny|squeeze/: {
+  case $lsbdistid {
+    /Debian|Ubuntu/: {
+
       if $repository == "" {
         fail "Variable \$repository not set"
       }
-
+    
       file { "/etc/apt/sources.list":
         ensure => absent,
         before => Exec["apt-get_update"],
       }
-
-      apt::sources_list { "$lsbdistcodename":
-        content => "# file managed by puppet
-deb http://mirror.switch.ch/ftp/mirror/debian/ ${lsbdistcodename} main contrib non-free
-deb http://mirror.switch.ch/ftp/mirror/debian-security/ ${lsbdistcodename}/updates main contrib non-free
-",
-      } 
-
+    
       apt::key {"5C662D02":
         source  => "http://pkg.camptocamp.net/packages-c2c-key.gpg",
       }
-
-      apt::sources_list {"c2c-${lsbdistcodename}-${repository}-sysadmin":
-        ensure  => present,
-        content => "deb http://pkg.camptocamp.net/${repository} ${lsbdistcodename} sysadmin\n",
-        require => Apt::Key["5C662D02"],
-      }
+    
+      case $lsbdistcodename {
+        /lenny|squeeze/: {
+          apt::sources_list { "$lsbdistcodename":
+            content => "# file managed by puppet
+deb http://mirror.switch.ch/ftp/mirror/debian/ ${lsbdistcodename} main contrib non-free
+deb http://mirror.switch.ch/ftp/mirror/debian-security/ ${lsbdistcodename}/updates main contrib non-free
+",
+          } 
+    
+          apt::sources_list {"c2c-${lsbdistcodename}-${repository}-sysadmin":
+            ensure  => present,
+            content => "deb http://pkg.camptocamp.net/${repository} ${lsbdistcodename} sysadmin\n",
+            require => Apt::Key["5C662D02"],
+          }
       
-      # squeeze-backports n'existera que quand squeeze passera en stable
-      if $lsbdistcodename == "lenny" {
-        apt::sources_list {"c2c-${lsbdistcodename}-${repository}-backports":
-        ensure  => present,
-        content => "deb http://pkg.camptocamp.net/${repository} ${lsbdistcodename}-backports main contrib non-free\n",
-        require => Apt::Key["5C662D02"],
+          apt::sources_list {"c2c-${lsbdistcodename}-${repository}-backports":
+            ensure  => present,
+            content => "deb http://pkg.camptocamp.net/${repository} ${lsbdistcodename}-backports main contrib non-free\n",
+            require => Apt::Key["5C662D02"],
+          }
         }
+    
+        /lucid/: {
+          apt::sources_list { "$lsbdistcodename":
+            content => "# file managed by puppet
+
+deb http://ch.archive.ubuntu.com/ubuntu/ ${lsbdistcodename} main restricted universe multiverse
+deb-src http://ch.archive.ubuntu.com/ubuntu/ ${lsbdistcodename} main restricted universe multiverse
+
+deb http://ch.archive.ubuntu.com/ubuntu/ ${lsbdistcodename}-updates main restricted universe multiverse
+deb-src http://ch.archive.ubuntu.com/ubuntu/ ${lsbdistcodename}-updates main restricted universe multiverse
+
+deb http://ch.archive.ubuntu.com/ubuntu/ ${lsbdistcodename}-security main restricted universe multiverse
+deb-src http://ch.archive.ubuntu.com/ubuntu/ ${lsbdistcodename}-security main restricted universe multiverse
+
+deb http://archive.canonical.com/ubuntu ${lsbdistcodename} partner
+deb-src http://archive.canonical.com/ubuntu ${lsbdistcodename} partner
+",
+          } 
+
+          apt::sources_list {"c2c-${lsbdistcodename}-${repository}-sysadmin":
+            ensure  => present,
+            content => "deb http://pkg.camptocamp.net/${repository} ${lsbdistcodename} sysadmin openerp-client\n",
+            require => Apt::Key["5C662D02"],
+          }
+        }
+
+        default: { fail "os-debian-repository not available for ${operatingsystem}/${lsbdistcodename}"}
       }
     }
-
+    
     default: { fail "os-debian-repository not available for ${operatingsystem}/${lsbdistcodename}"}
-  
   } 
 
 }

@@ -1,23 +1,22 @@
 class generic-tmpl::mw-tomcat {
 
-  # avoid partial configuration on untested-redhat-release
+  # avoid partial configuration on untested-distribution
   if $lsbdistcodename !~ /^(lenny|squeeze)$/ {
-    fail "class ${name} not tested on ${operatingsystem}/${lsbdistcodename}"
-  }  
+    fail "${name} not tested on ${operatingsystem}/${lsbdistcodename}"
+  }
 
+  include java
+  include java::dev
+  include tomcat::administration
+  
   case $lsbdistcodename {
-    "lenny": {
+    lenny: { 
       $tomcat_version = '6.0.26'
-      include java::v6
-      include tomcat::source
+      include tomcat::source 
     }
-    "squeeze": {
-      include java
+    squeeze: {
       include tomcat
     }
   }
-
-  include tomcat::administration
-  include java::dev
  
 }

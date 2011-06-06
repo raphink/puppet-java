@@ -26,15 +26,21 @@ class generic-tmpl::mw-postgis-8-4 {
     }
   }
 
-  case $lsbdistcodename {
-    # Debian
-    lenny :  { include c2c-postgis }
-    squeeze :  { include c2c-postgis }
-
-    # Ubuntu
-    lucid : { include c2c-postgis }
-
-    default: { fail "mw-postgis-8-4 not supported for ${operatingsystem}/${lsbdistcodename}"}
+  case $operatingsystem {
+    Debian: {
+      case $lsbdistcodename {
+        lenny :  { include c2c-postgis }
+        squeeze: { include postgis::debian::v8-4 }
+        default: { fail "mw-postgis-8-4 not available for ${operatingsystem}/${lsbdistcodename}"}
+      }
+    }
+    Ubuntu: {
+      case $lsbdistcodename {
+        lucid : { include postgis }
+        default: { fail "mw-postgis-8-4 not available for ${operatingsystem}/${lsbdistcodename}"}
+      }
+    }
+    default: { notice "Unsupported operatingsystem ${operatingsystem}" }
   }
 
 }
