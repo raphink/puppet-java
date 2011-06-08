@@ -160,6 +160,11 @@ class generic-tmpl::mw-sig {
   include python::virtualenv
   include tilecache::base
 
+  apt::preferences{["tilecache", "python-image-merge"]:
+    pin      => "release o=Camptocamp",
+    priority => 1001,
+  }
+
   # Apache modules for MapFish
 
   include apache::reverseproxy
