@@ -21,8 +21,7 @@ class generic-tmpl::mw-puppet-client inherits puppet::client {
   $facter_version = $operatingsystem ? {
     RedHat => "1.5.8-1.el${lsbmajdistrelease}",
     Debian => $lsbdistcodename ? {
-      lenny   => "1.5.7-1~c2c+3",
-      squeeze => latest,
+      lenny => "1.5.7-1~c2c+3",
     }
   }
 
@@ -32,8 +31,7 @@ class generic-tmpl::mw-puppet-client inherits puppet::client {
       4 => "0.7.2-1.el${lsbmajdistrelease}",
     },
     Debian => $lsbdistcodename ? {
-      lenny   => "0.7.2-1~bpo50+1",
-      squeeze => latest,
+      lenny => "0.7.2-1~bpo50+1",
     },
   }
 
@@ -42,7 +40,7 @@ class generic-tmpl::mw-puppet-client inherits puppet::client {
       case $lsbdistcodename {
         /lenny|squeeze/: {
 
-          if ($facter_version != latest) {
+          if ($facter_version) {
             apt::preferences {"facter":
               ensure   => present, 
               pin      => "version ${facter_version}", 
@@ -53,7 +51,7 @@ class generic-tmpl::mw-puppet-client inherits puppet::client {
             }
           }
 
-          if ($augeas_version != latest) {
+          if ($augeas_version) {
             apt::preferences {["augeas-lenses","augeas-tools", "libaugeas0"]:
               ensure   => present,
               pin      => "version ${augeas_version}",
