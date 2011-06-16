@@ -110,7 +110,7 @@ class generic-tmpl::mw-sig {
            priority => 1001,
          }
      
-         apt::preferences{["libgeos-c1", "proj"]:
+         apt::preferences{["libgeos-c1", "libgeos-dev", "proj"]:
            pin      => "release a=lenny-backports, o=Camptocamp",
            priority => 1001,
          }
