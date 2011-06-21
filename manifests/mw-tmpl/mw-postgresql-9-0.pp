@@ -14,4 +14,8 @@ class generic-tmpl::mw-postgresql-9-0 {
         }
   }
 
+  package {"postgresql-plperl-9.0":
+    ensure => present,
+  }
+
 }
