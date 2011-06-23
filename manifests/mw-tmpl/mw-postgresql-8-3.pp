@@ -7,4 +7,8 @@ class generic-tmpl::mw-postgresql-8-3 {
     ensure => present,
   }
 
+  package {"postgresql-plperl-8.3":
+    ensure => present,
+  }
+
 }

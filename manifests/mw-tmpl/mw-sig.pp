@@ -110,7 +110,7 @@ class generic-tmpl::mw-sig {
            priority => 1001,
          }
      
-         apt::preferences{["libgeos-c1", "proj"]:
+         apt::preferences{["libgeos-c1", "libgeos-dev", "proj"]:
            pin      => "release a=lenny-backports, o=Camptocamp",
            priority => 1001,
          }
@@ -159,6 +159,11 @@ class generic-tmpl::mw-sig {
   include python::dev
   include python::virtualenv
   include tilecache::base
+
+  apt::preferences{["tilecache", "python-image-merge"]:
+    pin      => "release o=Camptocamp",
+    priority => 1001,
+  }
 
   # Apache modules for MapFish
 
