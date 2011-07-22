@@ -20,7 +20,9 @@ class generic-tmpl::mw-puppet-client inherits puppet::client {
 
   $facter_version = $operatingsystem ? {
     RedHat => "1.5.8-1.el${lsbmajdistrelease}",
-    Debian => "1.5.7-1~c2c+3",
+    Debian => $lsbdistcodename ? {
+      lenny => "1.5.7-1~c2c+3",
+    }
   }
 
   $augeas_version = $operatingsystem ? {
@@ -29,40 +31,49 @@ class generic-tmpl::mw-puppet-client inherits puppet::client {
       4 => "0.7.2-1.el${lsbmajdistrelease}",
     },
     Debian => $lsbdistcodename ? {
-      lenny   => "0.7.2-1~bpo50+1",
-      squeeze => "0.7.2-1",
+      lenny => "0.7.2-1~bpo50+1",
     },
   }
 
   case $operatingsystem {
     Debian: {
       case $lsbdistcodename {
-        /lenny|squeeze/ :   { 
+        /lenny|squeeze/: {
 
-          apt::preferences {
-            "facter":
+          if ($facter_version) {
+            apt::preferences {"facter":
               ensure   => present, 
               pin      => "version ${facter_version}", 
               priority => 1100;
-            
-            ["augeas-lenses","augeas-tools", "libaugeas0"]:
+            }
+            Package["facter"] {
+              require +> Apt::Sources_list["c2c-${lsbdistcodename}-${repository}-sysadmin"],
+            }
+          }
+
+          if ($augeas_version) {
+            apt::preferences {["augeas-lenses","augeas-tools", "libaugeas0"]:
               ensure   => present,
               pin      => "version ${augeas_version}",
               priority => 1100;
-            
-            ["puppet", "puppet-common","vim-puppet", "puppet-el"]:
-              ensure   => present,
-              pin      => "version ${puppet_client_version}",
-              priority => 1100;
-          } 
+            }
+            Package["augeas-lenses","augeas-tools", "libaugeas0"] {
+              require +> Apt::Sources_list["c2c-${lsbdistcodename}-${repository}-sysadmin"],
+            }
+          }
 
+          apt::preferences {["puppet", "puppet-common","vim-puppet", "puppet-el"]:
+            ensure   => present,
+            pin      => "version ${puppet_client_version}",
+            priority => 1100;
+          }
           package {["puppet-common","vim-puppet", "puppet-el"]:
             ensure  => $puppet_client_version,
             require => Apt::Sources_list["c2c-${lsbdistcodename}-${repository}-sysadmin"],
             tag     => "install-puppet",
           }
           
-          Package["puppet", "facter"] {
+          Package["puppet"] {
             require +> Apt::Sources_list["c2c-${lsbdistcodename}-${repository}-sysadmin"],
           }
      
