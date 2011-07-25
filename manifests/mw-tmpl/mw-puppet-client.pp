@@ -26,17 +26,6 @@ class generic-tmpl::mw-puppet-client inherits puppet::client {
     }
   }
 
-  $augeas_version = $operatingsystem ? {
-    RedHat => $lsbmajdistrelease ? {
-      5 => "0.7.2-2.el${lsbmajdistrelease}",
-      4 => "0.7.2-1.el${lsbmajdistrelease}",
-    },
-    Debian => $lsbdistcodename ? {
-      lenny   => "0.7.2-1~bpo50+1",
-      default => "",
-    },
-  }
-
   case $operatingsystem {
     Debian: {
       case $lsbdistcodename {
@@ -49,17 +38,6 @@ class generic-tmpl::mw-puppet-client inherits puppet::client {
               priority => 1100;
             }
             Package["facter"] {
-              require +> Apt::Sources_list["c2c-${lsbdistcodename}-${repository}-sysadmin"],
-            }
-          }
-
-          if ($augeas_version != "") {
-            apt::preferences {["augeas-lenses","augeas-tools", "libaugeas0"]:
-              ensure   => present,
-              pin      => "version ${augeas_version}",
-              priority => 1100;
-            }
-            Package["augeas-lenses","augeas-tools", "libaugeas0"] {
               require +> Apt::Sources_list["c2c-${lsbdistcodename}-${repository}-sysadmin"],
             }
           }
