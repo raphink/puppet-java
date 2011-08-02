@@ -179,6 +179,10 @@ class generic-tmpl::mw-sig {
     ensure => present,
   }
 
+  # pyyaml package compilation
+  package {"libyaml-dev":
+    ensure => present,
+  }
 
   # Apache module for Mapserver
   package {"libapache2-mod-fcgid": ensure => present, }
