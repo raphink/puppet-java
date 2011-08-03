@@ -68,6 +68,12 @@ class generic-tmpl::mw-sig {
           ensure => purged,
         }
 
+        apt::preferences{"tilecache":
+          pin => "version 2.11.1~c2c+1",
+          priority => 1001,
+          before => Package["tilecache"],
+        }
+
         Package {
           require => [
             Exec["apt-get_update"], 
