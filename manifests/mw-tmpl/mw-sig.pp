@@ -175,7 +175,7 @@ class generic-tmpl::mw-sig {
 
   # other packages for MapFish
 
-  package {"naturaldocs":
+  package {["naturaldocs", "python-lxml"]:
     ensure => present,
   }
 
