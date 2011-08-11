@@ -175,13 +175,21 @@ class generic-tmpl::mw-sig {
 
   # other packages for MapFish
 
-  package {["naturaldocs", "python-lxml"]:
+  package {"naturaldocs":
     ensure => present,
   }
 
   # pyyaml package compilation
   package {"libyaml-dev":
     ensure => present,
+  }
+
+  # python-lxml package compilation
+  package {["libxml2-dev", "libxslt1-dev"]:
+    ensure => present,
+  }
+  package{"python-lxml":
+    ensure => absent,
   }
 
   # Apache module for Mapserver
