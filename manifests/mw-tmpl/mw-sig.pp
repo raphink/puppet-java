@@ -68,64 +68,6 @@ class generic-tmpl::mw-sig {
           ensure => purged,
         }
 
-        apt::preferences{"tilecache":
-          pin => "version 2.11.1~c2c+1",
-          priority => 1001,
-          before => Package["tilecache"],
-
-  class c2c-mapserver inherits mapserver::debian {
-
-    if !defined(Apt::Sources_list["c2c-${lsbdistcodename}-${repository}-sig"]) {
-      # Camptocamp SIG sources list
-      apt::sources_list {"c2c-${lsbdistcodename}-${repository}-sig":
-        ensure  => present,
-        content => "deb http://pkg.camptocamp.net/${repository} ${lsbdistcodename} sig sig-non-free\n",
-        require => Apt::Key["5C662D02"],
-      }
-    }
- 
-    case $lsbdistcodename {
-      squeeze: {
-        apt::preferences{[
-          "gdal-bin",
-          "libgdal-doc",
-          "libgdal-perl",
-          "libgdal-ruby",
-          "libgdal-ruby1.8",
-          "libgdal1-1.8.0",
-          "libgdal1-dev",
-          "python-gdal"]:
-          pin      => "version 1.8.0-1~c2c+*",
-          priority => 1001,
-        }
-
-        apt::preferences{[
-          "cgi-mapserver",
-          "libmapscript-ruby",
-          "libmapscript-ruby1.8",
-          "libmapscript-ruby1.9.1",
-          "mapserver-bin",
-          "mapserver-doc",
-          "perl-mapscript",
-          "php5-mapscript",
-          "python-mapscript"]:
-          pin => "version 6.0.0-1~c2c*",
-          priority => 1001,
-        }
-
-        apt::preferences{"libecw":
-          pin => "version 3.3-1+squeeze1~c2c*",
-          priority => 1001,
-        }
-
-        package {"nodejs":
-          ensure => present,
-        }
-
-        package {"libgdal1-1.7.0":
-          ensure => purged,
-        }
-
         Package {
           require => [
             Exec["apt-get_update"], 
