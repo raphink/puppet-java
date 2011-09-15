@@ -156,6 +156,7 @@ class generic-tmpl::mw-sig {
   package {"libgdal1-1.5.0": ensure => purged, }
 
   include buildenv::c
+  include buildenv::postgresql
   include python::dev
   include python::virtualenv
   include tilecache::base
