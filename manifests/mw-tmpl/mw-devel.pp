@@ -1,17 +1,11 @@
 class generic-tmpl::mw-devel {
 
-  # interactive python shell
-  package {"ipython":
-    ensure => present,
+  package {
+    "ack-grep":      ensure => present; # a grep replacement
+    "ipython":       ensure => present; # interactive python shell
+    "libxml2-utils": ensure => present; # xml utilities
+    "pyflakes":      ensure => present; # python static code checker
+    "pylint":        ensure => present; # python static code checker
   }
 
-  # python static code checker
-  package {["pyflakes", "pylint"]:
-    ensure => present,
-  }
-
-  # xml utilities
-  package {"libxml2-utils":
-    ensure => present,
-  }
 }
