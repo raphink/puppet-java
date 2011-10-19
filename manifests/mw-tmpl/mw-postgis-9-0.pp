@@ -10,7 +10,7 @@ class generic-tmpl::mw-postgis-9-0 {
 
     apt::preferences {[
       "postgis",
-      "postgresql-9-0-postgis",
+      "postgresql-9.0-postgis",
       ]:
       pin      => "version 1.5.2-2~c2c+*",
       priority => "1100",
@@ -22,7 +22,7 @@ class generic-tmpl::mw-postgis-9-0 {
 
     Package["postgis"] {
       require +> [
-        Apt::Preferences["postgis","postgresql-9-0-postgis"],
+        Apt::Preferences["postgis", "postgresql-9.0-postgis"],
         Apt::Sources_list["c2c-${lsbdistcodename}-${repository}-sig"],
         Apt::Key["5C662D02"],
       ]
