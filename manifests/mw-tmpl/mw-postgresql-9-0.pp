@@ -14,6 +14,11 @@ class generic-tmpl::mw-postgresql-9-0 {
         }
   }
 
+  apt::preferences {'libpq-dev':
+    pin      => 'release a=squeeze-backports',
+    priority => '1100',
+  }
+
   package {"postgresql-plperl-9.0":
     ensure => present,
   }
