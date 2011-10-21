@@ -9,7 +9,7 @@ class generic-tmpl::mw-postgis-9-0 {
     }
 
     apt::preferences {["postgis", "postgresql-9.0-postgis"]:
-      pin      => "version 1.5.2-2~c2c+*",
+      pin      => "release o=Camptocamp",
       priority => "1100",
     }
 
