@@ -62,7 +62,7 @@ deb http://mirror.switch.ch/ftp/mirror/debian-security/ ${lsbdistcodename}/updat
           }
         }
     
-        /lucid/: {
+        /lucid|oneiric/: {
           apt::sources_list { "$lsbdistcodename":
             content => "# file managed by puppet
 
@@ -80,9 +80,14 @@ deb-src http://archive.canonical.com/ubuntu ${lsbdistcodename} partner
 ",
           } 
 
+          case $lsbdistcodename {
+            "lucid": { $c2c_components = "sysadmin openerp-client postgresql" }
+            "oneiric": { $c2c_components = "sysadmin openerp-client" }
+          }
+
           apt::sources_list {"c2c-${lsbdistcodename}-${repository}-sysadmin":
             ensure  => present,
-            content => "deb http://pkg.camptocamp.net/${repository} ${lsbdistcodename} sysadmin openerp-client postgresql\n",
+            content => "deb http://pkg.camptocamp.net/${repository} ${lsbdistcodename} ${c2c_components}\n",
             require => Apt::Key["5C662D02"],
           }
         }
