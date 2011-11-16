@@ -1,4 +1,4 @@
-class my-augeas inherits augeas::debian {
+class generic-tmpl::my-augeas inherits augeas::debian {
 
   if ($augeas_version != "present") {
     apt::preferences {["augeas-lenses","augeas-tools", "libaugeas0"]:

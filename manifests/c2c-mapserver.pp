@@ -1,4 +1,4 @@
-class c2c-mapserver inherits mapserver::debian {
+class generic-tmpl::c2c-mapserver inherits mapserver::debian {
 
   if !defined(Apt::Sources_list["c2c-${lsbdistcodename}-${repository}-sig"]) {
     # Camptocamp SIG sources list

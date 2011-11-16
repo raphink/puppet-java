@@ -16,7 +16,7 @@ class generic-tmpl::mw-sig {
   }
 
   case $operatingsystem {
-    Debian:  { include c2c-mapserver }
+    Debian:  { include generic-tmpl::c2c-mapserver }
     default: { fail "Unsupported operatingsystem ${operatingsystem}" }
   }
 

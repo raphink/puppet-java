@@ -22,7 +22,7 @@ class generic-tmpl::mw-augeas {
 
   case $operatingsystem {
     /Debian|Ubuntu/: {
-      include my-augeas 
+      include generic-tmpl::my-augeas
     }
     /RedHat|CentOS/: {
       include augeas::redhat
