@@ -11,10 +11,7 @@
 # Todo:
 #  - Intégrer également les distributions RedHat et Centos
 #
-class generic-tmpl::mw-puppet-client inherits puppet::client::base {
-
-  Package["facter"] { ensure => present }
-  Package["puppet"] { ensure => present }
+class generic-tmpl::mw-puppet-client inherits puppet::client::cron {
 
   case $operatingsystem {
     Debian: {
