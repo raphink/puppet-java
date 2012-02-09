@@ -1,4 +1,4 @@
-class os-debian-squeeze-locales {
+class generic-tmpl::os::locales {
 
   include locales::sources
 
