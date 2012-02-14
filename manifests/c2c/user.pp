@@ -31,15 +31,22 @@ define generic-tmpl::c2c::user (
 
     $firstname = url_get("${sadb}/user/${_username}/firstname")
     $lastname  = url_get("${sadb}/user/${_username}/lastname")
+    $uid       = url_get("${sadb}/user/${_username}/uid_number")
   
+    group {$_username:
+      ensure => $ensure,
+      gid    => $uid,
+    }
+
     user {$_username:
       ensure     => $_ensure,
       comment    => "${firstname} ${lastname}",
-      uid        => url_get("${sadb}/user/${_username}/uid_number"),
+      uid        => $uid,
+      gid        => $uid,
       managehome => true,
       shell      => "/bin/bash",
       groups     => $groups,
-      require    => Class["c2c::skel"],
+      require    => [ Group[$_username], Class["c2c::skel"] ],
     }
   }
 
