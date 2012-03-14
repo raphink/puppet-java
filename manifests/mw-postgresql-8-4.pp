@@ -1,6 +1,7 @@
 class generic-tmpl::mw-postgresql-8-4 {
 
   include postgresql::v8-4
+  include postgresql::backup
   include postgresql::administration
 
   if $lsbdistcodename == 'lenny' {

@@ -6,6 +6,7 @@ class generic-tmpl::mw-postgresql-9-0 {
   }
 
   include postgresql::v9-0
+  include postgresql::backup
   include postgresql::administration
 
   if !defined(Package["python-psycopg2"]) {
