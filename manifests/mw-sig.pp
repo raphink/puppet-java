@@ -51,6 +51,11 @@ class generic-tmpl::mw-sig {
     ensure => present,
   }
 
+  # needed for building mapproxy in virtualenvs, see RT#154382
+  package { ["libgdal1-dev", "libfreetype6-dev"]:
+    ensure => present,
+  }
+
   # python-lxml package compilation
   package {["libxml2-dev", "libxslt1-dev"]:
     ensure => present,
