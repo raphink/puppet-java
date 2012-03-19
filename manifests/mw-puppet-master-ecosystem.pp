@@ -1,6 +1,7 @@
 class generic-tmpl::mw-puppet-master-ecosystem {
 
   include githubsync::dashboard
+  include githubsync::nagios
   include git-subtree
 
   motd::message { "zzz-githubsync-status":
@@ -18,6 +19,22 @@ machine github.com
 login c2c-modules-subtree-sync
 password paipah6Icose1aeD
 ',
+  }
+
+  monitoring::check { "GitHub sync":
+    ensure   => present,
+    codename => "check_github_module_sync",
+    command  => "check-github-module-sync.sh",
+    base     => "/var/local/run/githubsync/nagios-plugins/",
+    type     => "passive",
+    interval => "60", # once an hour
+    retry    => "60", # once an hour
+    server   => $nagios_nsca_server,
+    server_tag => $nagios_nsca_export_for ? {
+      "" => false,
+      default => $nagios_nsca_export_for
+    },
+    require   => Class["githubsync::nagios"],
   }
 
   file { "/var/local/run/githubsync/.ssh":
