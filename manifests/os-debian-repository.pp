@@ -66,14 +66,14 @@ deb http://mirror.switch.ch/ftp/mirror/debian-security/ ${lsbdistcodename}/updat
           apt::sources_list { "$lsbdistcodename":
             content => "# file managed by puppet
 
-deb http://ch.archive.ubuntu.com/ubuntu/ ${lsbdistcodename} main restricted universe multiverse
-deb-src http://ch.archive.ubuntu.com/ubuntu/ ${lsbdistcodename} main restricted universe multiverse
+deb mirror://mirrors.ubuntu.com/mirrors.txt ${lsbdistcodename} main restricted universe multiverse
+deb-src mirror://mirrors.ubuntu.com/mirrors.txt ${lsbdistcodename} main restricted universe multiverse
 
-deb http://ch.archive.ubuntu.com/ubuntu/ ${lsbdistcodename}-updates main restricted universe multiverse
-deb-src http://ch.archive.ubuntu.com/ubuntu/ ${lsbdistcodename}-updates main restricted universe multiverse
+deb mirror://mirrors.ubuntu.com/mirrors.txt ${lsbdistcodename}-updates main restricted universe multiverse
+deb-src mirror://mirrors.ubuntu.com/mirrors.txt ${lsbdistcodename}-updates main restricted universe multiverse
 
-deb http://ch.archive.ubuntu.com/ubuntu/ ${lsbdistcodename}-security main restricted universe multiverse
-deb-src http://ch.archive.ubuntu.com/ubuntu/ ${lsbdistcodename}-security main restricted universe multiverse
+deb mirror://mirrors.ubuntu.com/mirrors.txt ${lsbdistcodename}-security main restricted universe multiverse
+deb-src mirror://mirrors.ubuntu.com/mirrors.txt ${lsbdistcodename}-security main restricted universe multiverse
 
 deb http://archive.canonical.com/ubuntu ${lsbdistcodename} partner
 deb-src http://archive.canonical.com/ubuntu ${lsbdistcodename} partner
