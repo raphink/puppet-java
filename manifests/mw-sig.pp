@@ -68,6 +68,21 @@ class generic-tmpl::mw-sig {
   package {"libapache2-mod-fcgid": ensure => present, }
   apache::module {"fcgid": ensure => present, }
   
+  if $repository == 'staging' {
+    # set up python eggs directory only for staging now
+    file {'/var/cache/python-eggs':
+      ensure => directory,
+      mode   => 0755,
+      owner  => 'www-data',
+      group  => 'www-data',
+    }
+    apache::confd {'WSGIPythonEggs':
+      ensure        => present,
+      configuration => 'WSGIPythonEggs /var/cache/python-eggs',
+      require       => File['/var/cache/python-eggs'],
+    }
+  }
+
 
   # Custom projections in EPSG file
 
