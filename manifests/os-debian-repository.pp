@@ -45,6 +45,7 @@ class generic-tmpl::os-debian-repository {
           apt::sources_list { "$lsbdistcodename":
             content => "# file managed by puppet
 deb http://mirror.switch.ch/ftp/mirror/debian/ ${lsbdistcodename} main contrib non-free
+deb http://mirror.switch.ch/ftp/mirror/debian/ ${lsbdistcodename}-updates main contrib non-free
 deb http://mirror.switch.ch/ftp/mirror/debian-security/ ${lsbdistcodename}/updates main contrib non-free
 ",
           } 
