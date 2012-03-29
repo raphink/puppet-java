@@ -12,10 +12,11 @@
 #   'present' or 'absent'. Creates or removes the user / the key.
 #
 # [*username*]
-#   *namevar*: Name of the system user to create or whose ssh key should be
-#   installed on another account. If the 'onuser' parameter is not set or is
-#   equal to 'username', and the account isn't already defined, this defines
-#   it.
+#   *namevar*: Name of the system user to create or account in which to add
+#   the ssh key. When creating a new user it is best not to set this and have
+#   only the username in the namevar. When adding multiple keys in an account,
+#   it is necessary to have distinct namevars and specify the target system
+#   user using the 'username' parameter.
 #
 # [*groups*]
 #   If the user has to be defined, it will be added to this groups.
@@ -36,14 +37,14 @@
 #
 # Create a nominative system account with the user's ssh key:
 #
-# generic-tmpl::c2c::user {'ckaenzig':
+# generic-tmpl::os::user {'ckaenzig':
 #   ensure => present,
 #   groups => ['sysadmin'],
 # }
 #
 # Add a user's key in a shared system account:
 #
-# generic-tmpl::c2c::user {'ochriste':
+# generic-tmpl::os::user {'ochriste':
 #   ensure => present,
 #   onuser => 'admin':
 # }
@@ -67,7 +68,7 @@ define generic-tmpl::os::user (
         target   => $target,
       }
     }
-    default: { fail 'Unknown user backend' }
+    default: { fail 'Unknown backend for generic-tmpl::os::user' }
   }
 
 }
