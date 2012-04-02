@@ -1,4 +1,4 @@
-class generic-tmpl::os-vim {
+class generic-tmpl::os::vim {
   $vim_pkgs = $::operatingsystem ? {
     /Debian|Ubuntu/ => ['vim', 'vim-common', 'vim-runtime', 'vim-tiny'],
     /RedHat|CentOS/ => 'vim',
