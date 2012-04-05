@@ -15,8 +15,9 @@ class generic-tmpl::mw-augeas {
       4 => "0.7.2-1.el${lsbmajdistrelease}",
     },
     Debian => $lsbdistcodename ? {
-      lenny   => "0.7.2-1~bpo50+1",
-      default => "present",
+      lenny    => "0.10.0-0ubuntu4~c2c~lenny2",
+      squeeze  => "0.10.0-0ubuntu4~c2c~squeeze1",
+      default  => "present",
     },
   }
 
