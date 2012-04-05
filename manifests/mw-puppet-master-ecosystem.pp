@@ -3,6 +3,7 @@ class generic-tmpl::mw-puppet-master-ecosystem {
   include githubsync::dashboard
   include githubsync::nagios
   include git-subtree
+  include puppet::lint
 
   motd::message { "zzz-githubsync-status":
     source  => "file:///var/local/run/githubsync/current-status.txt",
