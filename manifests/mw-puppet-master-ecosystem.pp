@@ -59,4 +59,15 @@ password paipah6Icose1aeD
     recurse => true,
   }
 
+  case $operatingsystem {
+    /Debian|Ubuntu/: {
+
+      apt::preferences {"puppetmaster":
+        ensure   => present,
+        pin      => "release o=Camptocamp, n=${lsbdistcodename}",
+        priority => 1100,
+      }
+
+    }
+  }
 }
