@@ -40,7 +40,7 @@ password paipah6Icose1aeD
     ensure   => present,
     codename => "check_github_module_sync",
     command  => "check-github-module-sync.sh",
-    base     => "/var/local/run/githubsync/nagios-plugins/",
+    base     => "/var/local/run/githubsync/nagios-plugins",
     type     => "passive",
     interval => "60", # once an hour
     retry    => "60", # once an hour
