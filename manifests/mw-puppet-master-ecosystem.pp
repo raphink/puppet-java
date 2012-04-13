@@ -60,7 +60,7 @@ password paipah6Icose1aeD
   }
 
   # We provide packages for Puppet 0.25 only
-  if $puppet_legacy {
+  if $puppetmaster_legacy {
     case $operatingsystem {
       /Debian|Ubuntu/: {
         apt::preferences {"puppetmaster":
