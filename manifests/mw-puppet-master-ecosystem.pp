@@ -59,15 +59,16 @@ password paipah6Icose1aeD
     recurse => true,
   }
 
-  case $operatingsystem {
-    /Debian|Ubuntu/: {
-
-      apt::preferences {"puppetmaster":
-        ensure   => present,
-        pin      => "release o=Camptocamp, n=${lsbdistcodename}",
-        priority => 1100,
+  # We provide packages for Puppet 0.25 only
+  if $puppet_legacy {
+    case $operatingsystem {
+      /Debian|Ubuntu/: {
+        apt::preferences {"puppetmaster":
+          ensure   => present,
+          pin      => "release o=Camptocamp, n=${lsbdistcodename}",
+          priority => 1100,
+        }
       }
-
     }
   }
 }
