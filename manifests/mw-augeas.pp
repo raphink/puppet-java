@@ -11,8 +11,8 @@ class generic-tmpl::mw-augeas {
 
   $augeas_version = $operatingsystem ? {
     RedHat => $lsbmajdistrelease ? {
-      5 => "0.7.2-2.el${lsbmajdistrelease}",
-      4 => "0.7.2-1.el${lsbmajdistrelease}",
+      5 => "0.10.0-3.el${lsbmajdistrelease}",
+      4 => "0.10.0-3.el${lsbmajdistrelease}",
     },
     Debian => $lsbdistcodename ? {
       lenny    => '0.10.0-0ubuntu4~c2c~lenny2',
