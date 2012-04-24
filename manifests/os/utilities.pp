@@ -1,5 +1,8 @@
 class generic-tmpl::os::utilities {
-  package {'tree':
+  package {[
+    'tree',
+    'ack-grep',
+    ]:
     ensure => present,
   }
 }
