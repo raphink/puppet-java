@@ -30,10 +30,11 @@ class generic-tmpl::mw::mcollective::node {
 
   # This is ugly, but until the init script gets fixed
   # we need to ensure that only 
-  exec {'pkill -f mcollectived':
-    path => '/usr/bin:/usr/sbin:/bin',
-    onlyif => 'test `pgrep -f mcollectived | wc -l` -gt 1',
-    notify => Service['mcollective'],
+  exec {'Avoid multiple mcollectived':
+    path    => '/usr/bin:/usr/sbin:/bin',
+    command => 'pkill -f mcollectived',
+    onlyif  => 'test `pgrep -f mcollectived | wc -l` -gt 1',
+    notify  => Service['mcollective'],
   }
 
   mcollective::plugin { $agents:
