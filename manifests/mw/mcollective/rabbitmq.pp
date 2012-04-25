@@ -1,8 +1,14 @@
 class generic-tmpl::mw::mcollective::rabbitmq {
   include mcollective-in-5-minutes::rabbitmq
 
-  apt::preferences { 'rabbitmq-server':
-    pin => 'release o=Camptocamp',
-    priority => 1100,
+  case $::operatingsystem {
+    /Debian|Ubuntu/: {
+      apt::preferences { 'rabbitmq-server':
+        pin => 'release o=Camptocamp',
+        priority => 1100,
+      }
+    }
+
+    default: { }
   }
 }
