@@ -1,5 +1,5 @@
 class generic-tmpl::mw::mcollective::client {
-  include mcollective-in-5-minutes::client
+  include mcollective::client
 
   $agents = [
     'augeasquery-client',
@@ -13,7 +13,7 @@ class generic-tmpl::mw::mcollective::client {
     'stomputil-client',
     ]
 
-  mcollective-in-5-minutes::plugin { $agents:
+  mcollective::plugin { $agents:
     ensure => present,
   }
 }

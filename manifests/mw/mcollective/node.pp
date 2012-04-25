@@ -1,5 +1,5 @@
 class generic-tmpl::mw::mcollective::node {
-  include mcollective-in-5-minutes::node
+  include mcollective::node
 
   $agents = [
     'augeasquery',
@@ -28,7 +28,7 @@ class generic-tmpl::mw::mcollective::node {
     default: { }
   }
 
-  mcollective-in-5-minutes::plugin { $agents:
+  mcollective::plugin { $agents:
     ensure => present,
   }
 }

@@ -1,5 +1,5 @@
 class generic-tmpl::mw::mcollective::rabbitmq {
-  include mcollective-in-5-minutes::rabbitmq
+  include mcollective::rabbitmq
 
   case $::operatingsystem {
     /Debian|Ubuntu/: {
