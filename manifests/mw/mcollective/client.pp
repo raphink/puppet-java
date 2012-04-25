@@ -1,8 +1,10 @@
 class generic-tmpl::mw::mcollective::client {
   include ::mcollective::client
 
-  $agents = $::operatingsystem ? {
-    /Debian|Ubuntu/ => [
+  case $::operatingsystem {
+    # Mcollective agent packages are split in Debian/Ubuntu
+    /Debian|Ubuntu/: {
+      $agents = [
       'augeasquery-client',
       'filemgr-client',
       'nettest-client',
@@ -12,21 +14,14 @@ class generic-tmpl::mw::mcollective::client {
       'puppetd-client',
       'service-client',
       'stomputil-client',
-      ],
-    /RedHat|CentOS/ => [
-      'augeasquery',
-      'filemgr',
-      'nettest',
-      'nrpe',
-      'package',
-      'process',
-      'puppetd',
-      'service',
-      'stomputil',
-      ],
-  }
+      ]
 
-  mcollective::plugin { $agents:
-    ensure => present,
+      mcollective::plugin { $agents:
+        ensure => present,
+      }
+
+    }
+
+    default: { }
   }
 }
