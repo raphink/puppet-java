@@ -28,14 +28,6 @@ class generic-tmpl::mw::mcollective::node {
     default: { }
   }
 
-  # Ensure mcollective is only running once
-  exec {'Avoid multiple mcollectived':
-    path    => '/usr/bin:/usr/sbin:/bin',
-    command => 'pkill -f mcollectived',
-    onlyif  => 'test `pgrep -f [m]collectived | wc -l` -gt 1',
-    notify  => Service['mcollective'],
-  }
-
   mcollective::plugin { $agents:
     ensure => present,
   }
