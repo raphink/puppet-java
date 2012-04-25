@@ -28,12 +28,11 @@ class generic-tmpl::mw::mcollective::node {
     default: { }
   }
 
-  # This is ugly, but until the init script gets fixed
-  # we need to ensure that only 
+  # Ensure mcollective is only running once
   exec {'Avoid multiple mcollectived':
     path    => '/usr/bin:/usr/sbin:/bin',
     command => 'pkill -f mcollectived',
-    onlyif  => 'test `pgrep -f mcollectived | wc -l` -gt 1',
+    onlyif  => 'test `pgrep -f [m]collectived | wc -l` -gt 1',
     notify  => Service['mcollective'],
   }
 
