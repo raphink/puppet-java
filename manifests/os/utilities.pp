@@ -1,8 +1,7 @@
 class generic-tmpl::os::utilities {
-  package {[
-    'tree',
-    'ack-grep',
-    ]:
-    ensure => present,
+
+  generic-tmpl::package::condinstall {
+    'tree': ;
+    'ack-grep': centos => 'ack', redhat => 'ack';
   }
 }
