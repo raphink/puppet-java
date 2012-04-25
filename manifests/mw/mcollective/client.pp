@@ -1,5 +1,5 @@
 class generic-tmpl::mw::mcollective::client {
-  include mcollective::client
+  include ::mcollective::client
 
   $agents = [
     'augeasquery-client',
