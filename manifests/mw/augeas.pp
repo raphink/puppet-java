@@ -1,5 +1,5 @@
 #
-# == Template: mw-augeas
+# == Class: generic-tmpl::mw::augeas
 #
 # Cette classe permet d'installer augeas a la version voulue
 # 
@@ -7,7 +7,7 @@
 #  - Module camptocamp/puppet-augeas
 #  - Class os-debian-repository du module camptocamp/puppet-generic-tmpl
 #
-class generic-tmpl::mw-augeas {
+class generic-tmpl::mw::augeas {
 
   $augeas_version = $operatingsystem ? {
     RedHat => $lsbmajdistrelease ? {
@@ -30,7 +30,7 @@ class generic-tmpl::mw-augeas {
 
   case $operatingsystem {
     /Debian|Ubuntu/: {
-      include generic-tmpl::my-augeas
+      include generic-tmpl::mw::augeas::debian
     }
     /RedHat|CentOS/: {
       include augeas::redhat
