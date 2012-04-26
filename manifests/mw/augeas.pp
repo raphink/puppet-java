@@ -13,6 +13,7 @@ class generic-tmpl::mw::augeas {
     /RedHat|CentOS/ => $lsbmajdistrelease ? {
       5 => "0.10.0-3.el${lsbmajdistrelease}",
       4 => "0.10.0-3.el${lsbmajdistrelease}",
+      default => 'present',
     },
     /Debian|Ubuntu/ => $lsbdistcodename ? {
       lenny    => '0.10.0-0ubuntu4~c2c~lenny2',
@@ -27,7 +28,7 @@ class generic-tmpl::mw::augeas {
       default  => 'present',
     },
 
-    default => '',
+    default => 'present',
   }
 
   case $operatingsystem {
