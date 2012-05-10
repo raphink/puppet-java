@@ -17,6 +17,15 @@ class generic-tmpl::c2c-mapserver inherits mapserver::debian {
         priority => 1001,
       }
 
+      # Package qgis-mapserver already has
+      # an apt::preferences settting
+      # with priority 1100 in qgis::repo
+      apt::preferences{"qgis-c2c":
+        package  => "qgis-mapserver qgis-providers",
+        pin      => "version 1.7.4-1~squeeze1+c2c*",
+        priority => 1200,
+      }
+
       apt::preferences{[
         "cgi-mapserver",
         "libmapscript-ruby",
