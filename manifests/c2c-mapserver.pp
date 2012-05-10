@@ -20,36 +20,28 @@ class generic-tmpl::c2c-mapserver inherits mapserver::debian {
       # Package qgis-mapserver already has
       # an apt::preferences settting
       # with priority 1100 in qgis::repo
-      apt::preferences{"qgis-mapserver-c2c":
-        package  => "qgis-mapserver qgis-providers qgis-providers-common",
-        pin      => "release c=sig",
+      apt::preferences{"qgis-c2c":
+        package  => 'qgis-mapserver qgis-providers qgis-providers-common',
+        pin      => 'release c=sig',
         priority => 1200,
       }
 
-      apt::preferences{[
-        "cgi-mapserver",
-        "libmapscript-ruby",
-        "libmapscript-ruby1.8",
-        "libmapscript-ruby1.9.1",
-        "mapserver-bin",
-        "mapserver-doc",
-        "perl-mapscript",
-        "php5-mapscript",
-        "python-mapscript"]:
-        pin => "version 6.0.0-1~c2c*",
+      apt::preferences{'mapserver':
+        package  => 'cgi-mapserver libmapscript-ruby libmapscript-ruby1.8 libmapscript-ruby1.9.1 mapserver-bin mapserver-doc perl-mapscript php5-mapscript python-mapscript',
+        pin => 'version 6.0.0-1~c2c*',
         priority => 1001,
       }
 
-      apt::preferences{"libecw":
-        pin => "version 3.3-1+squeeze1~c2c*",
+      apt::preferences{'libecw':
+        pin => 'version 3.3-1+squeeze1~c2c*',
         priority => 1001,
       }
 
-      package {"nodejs":
+      package {'nodejs':
         ensure => present,
       }
 
-      package {"libgdal1-1.7.0":
+      package {'libgdal1-1.7.0':
         ensure => purged,
       }
     }
