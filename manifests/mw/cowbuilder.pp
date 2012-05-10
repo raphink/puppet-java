@@ -9,9 +9,11 @@ define generic-tmpl::mw::cowbuilder (
   }
 
   $pbuilderrc = $real_dist ? {
-    /lenny/ => 'MIRRORSITE="http://archive.debian.org/debian"
+    /lenny/                 => 'MIRRORSITE="http://archive.debian.org/debian"
 ',
-    default => '',
+    /lucid|oneiric|precise/ => 'MIRRORSITE="http://archive.ubuntu.com/ubuntu"
+',
+    default                 => '',
   }
 
   pbuilder::cowbuilder {
