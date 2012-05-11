@@ -24,4 +24,7 @@ class generic-tmpl::mw::mcollective::client {
 
     default: { }
   }
+
+  # Add applications
+  mcollective::application {['healthcheck', 'upgrade']: }
 }
