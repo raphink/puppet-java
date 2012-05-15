@@ -2,7 +2,7 @@
 # == Template: mw-puppet-client
 #
 # Cette classe permet d'installer d'une manière puppet, facter et augeas
-# 
+#
 # Dépendances:
 #  - Module camptocamp/puppet-puppet
 #  - Module camptocamp/puppet-apt
@@ -34,25 +34,6 @@ class generic-tmpl::mw-puppet-client {
         priority => 1100,
       }
 
-    }
-  }
-
-  case $puppetversion {
-    "0.25.5": {
-      # Workaround for ssh_authorized_users tries to save to local filebucket as non-root user, see :
-      # http://projects.puppetlabs.com/issues/4267
-      file { "ssh_authorized_key parsed.rb with fix":
-        path => $operatingsystem ? {
-          /Debian|Ubuntu/        => "/usr/lib/ruby/1.8/puppet/provider/ssh_authorized_key/parsed.rb",
-          /RedHat|CentOS|Fedora/ => "/usr/lib/ruby/site_ruby/1.8/puppet/provider/ssh_authorized_key/parsed.rb",
-        },
-        ensure  => present,
-        mode    => 0644,
-        owner   => root,
-        group   => root,
-        source  => "puppet:///modules/generic-tmpl/puppet-0.25.5/parse-with-workaround-line72.rb",
-        require => Package["puppet"],
-      }
     }
   }
 
