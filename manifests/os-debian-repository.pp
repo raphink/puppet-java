@@ -48,7 +48,6 @@ class generic-tmpl::os-debian-repository {
               apt::sources_list { "$lsbdistcodename":
                 content => "# file managed by puppet
 deb http://archive.debian.org/debian/ ${lsbdistcodename} main contrib non-free
-deb http://archive.debian.org/debian-security/ ${lsbdistcodename}/updates main contrib non-free
     ",
               }
             }
