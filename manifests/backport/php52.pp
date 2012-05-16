@@ -6,7 +6,6 @@ class generic-tmpl::backport::php52 {
 
     apt::sources_list {"debian-lenny":
       ensure  => present,
-      source  => 'puppet:///modules/os/etc/apt/sources.list.d/sources.list-debian-lenny',
       content => 'deb http://archive.debian.org/debian/ lenny main contrib non-free
 ',
     }
