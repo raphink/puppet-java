@@ -16,6 +16,12 @@ class generic-tmpl::mw::mcollective::node {
   case $::operatingsystem {
     /Debian|Ubuntu/: {
 
+      apt::preferences {'mcollective':
+        package  => 'mcollective mcollective-common mcollective-client mcollective-doc',
+        pin      => 'release o=Camptocamp',
+        priority => '1100',
+      }
+
       # Let them upgrade
       apt::preferences {'mcollective-agents':
         # Lenny machines don't recognize glob()
