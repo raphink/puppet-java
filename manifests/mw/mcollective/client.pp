@@ -26,5 +26,5 @@ class generic-tmpl::mw::mcollective::client {
   }
 
   # Add applications
-  mcollective::application {['healthcheck', 'upgrade']: }
+  mcollective::application {['healthcheck', 'upgrade', 'nagios']: }
 }
