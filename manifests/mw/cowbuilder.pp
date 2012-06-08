@@ -34,14 +34,14 @@ define generic-tmpl::mw::cowbuilder (
       pbuilder_name => "${name}-i386",
       pbuilder_type => 'cowbuilder',
       filename      => "c2c-${real_dist}-staging-sysadmin",
-      content       => 'deb http://pkg.camptocamp.net/staging ${real_dist} sysadmin
-';
+      content       => "deb http://pkg.camptocamp.net/staging ${real_dist} sysadmin
+";
 
     "c2c-${real_dist}-staging-sysadmin on ${name}-amd64":
       pbuilder_name => "${name}-amd64",
       pbuilder_type => 'cowbuilder',
       filename      => "c2c-${real_dist}-staging-sysadmin",
-      content       => 'deb http://pkg.camptocamp.net/staging ${real_dist} sysadmin
-';
+      content       => "deb http://pkg.camptocamp.net/staging ${real_dist} sysadmin
+";
   }
 }
