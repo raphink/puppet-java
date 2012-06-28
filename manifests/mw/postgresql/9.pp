@@ -1,4 +1,4 @@
-class generic-tmpl::mw-postgresql-9 {
+class generic-tmpl::mw::postgresql::9 {
 
   # avoid partial configuration on untested-distribution
   if $::lsbdistcodename !~ /^squeeze$/ {
