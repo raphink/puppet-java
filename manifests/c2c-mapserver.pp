@@ -28,7 +28,7 @@ class generic-tmpl::c2c-mapserver inherits mapserver::debian {
 
       apt::preferences{'mapserver':
         package  => 'cgi-mapserver libmapscript-ruby libmapscript-ruby1.8 libmapscript-ruby1.9.1 mapserver-bin mapserver-doc perl-mapscript php5-mapscript python-mapscript',
-        pin => 'version 6.0.0-1~c2c*',
+        pin => 'release c=sig, o=Camptocamp',
         priority => 1001,
       }
 
