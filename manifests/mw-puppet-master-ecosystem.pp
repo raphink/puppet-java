@@ -10,18 +10,12 @@ class generic-tmpl::mw-puppet-master-ecosystem {
     require => File["/var/local/run/githubsync/current-status.txt"],
   }
 
-  archive::download {'puppetstoredconfigclean':
-    url      => 'https://raw.github.com/puppetlabs/puppet/master/ext/puppetstoredconfigclean.rb',
-    checksum => false,
-    src_target => '/usr/local/bin',
-  }
-
-  file {'/usr/local/bin/puppetstoredconfigclean':
+  file {'/usr/local/bin/puppetstoredconfigclean.rb':
     ensure  => present,
+    source  => 'puppet:///modules/generic-tmpl/puppet/puppetstoredconfigclean.rb',
     owner   => 'root',
     group   => 'root',
     mode    => 0755,
-    require => Archive::Download['puppetstoredconfigclean'],
   }
 
   file { "/var/local/run/githubsync/.netrc":
