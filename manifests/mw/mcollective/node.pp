@@ -29,6 +29,18 @@ class generic-tmpl::mw::mcollective::node {
         pin      => 'release o=Camptocamp',
         priority => '1100',
       }
+
+      # Until mcollective includes it by default
+      package {'mcollective-plugins-uapt':
+        ensure  => present,
+        notify  => Service['mcollective'],
+        require => Apt::Preferences['mcollective-plugins-uapt'],
+      }
+
+      apt::preferences {'mcollective-plugins-uapt':
+        pin      => 'release o=Camptocamp',
+        priority => '1100',
+      }
     }
 
     default: { }
