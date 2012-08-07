@@ -41,23 +41,32 @@ class generic-tmpl::os-debian-repository {
       }
     
       case $lsbdistcodename {
-        /lenny|squeeze/: {
+        /lenny|squeeze|wheezy/: {
 
           case $lsbdistcodename {
             'lenny': {
               apt::sources_list { "$lsbdistcodename":
                 content => "# file managed by puppet
 deb http://archive.debian.org/debian/ ${lsbdistcodename} main contrib non-free
-    ",
+",
               }
             }
-            'squeeze': { 
+            'squeeze': {
               apt::sources_list { "$lsbdistcodename":
                 content => "# file managed by puppet
 deb http://mirror.switch.ch/ftp/mirror/debian/ ${lsbdistcodename} main contrib non-free
 deb http://mirror.switch.ch/ftp/mirror/debian/ ${lsbdistcodename}-updates main contrib non-free
 deb http://mirror.switch.ch/ftp/mirror/debian-security/ ${lsbdistcodename}/updates main contrib non-free
-    ",
+",
+              }
+            }
+            'wheezy': {
+              apt::sources_list { "$lsbdistcodename":
+                content => "# file managed by puppet
+deb http://mirror.switch.ch/ftp/mirror/debian/ ${lsbdistcodename} main contrib non-free
+#deb http://mirror.switch.ch/ftp/mirror/debian/ ${lsbdistcodename}-updates main contrib non-free
+deb http://mirror.switch.ch/ftp/mirror/debian-security/ ${lsbdistcodename}/updates main contrib non-free
+",
               }
             }
           }
