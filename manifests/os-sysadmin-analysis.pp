@@ -27,10 +27,10 @@ class generic-tmpl::os-sysadmin-analysis {
       }
     }
     CentOS,RedHat: {
-      package {[
-        'sipcalc',
-        'jwhois',
-        ]:
+      package { $lsbmajdistrelease ? {
+          '5' => ['sipcalc', 'jwhois'],
+          '6' => ['jwhois'],
+        }:
         ensure => present,
       }
     }
