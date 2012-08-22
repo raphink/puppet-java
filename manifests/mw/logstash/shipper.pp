@@ -5,7 +5,7 @@ class generic-tmpl::mw::logstash::shipper {
 
   augeas {'limit logstash-shipper memory':
     changes => 'set /files/etc/default/logstash-shipper/LS_JAVA_OPTS \'"-Xms256m -Xmx256m"\'',
-    before  => Service['logstash-shipper'],
+    notify  => Service['logstash-shipper'],
   }
 
   apt::preferences{'libpcre3':
