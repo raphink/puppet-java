@@ -1,6 +1,6 @@
 class generic-tmpl::mw::augeas::debian {
 
-  include augeas::debian
+  include ::augeas::debian
 
   if ($augeas_version != "present") {
     apt::preferences {'augeas':

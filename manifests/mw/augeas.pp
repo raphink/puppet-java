@@ -36,7 +36,7 @@ class generic-tmpl::mw::augeas {
       include generic-tmpl::mw::augeas::debian
     }
     /RedHat|CentOS/: {
-      include augeas::redhat
+      include generic-tmpl::mw::augeas::redhat
     }
   } 
 }
