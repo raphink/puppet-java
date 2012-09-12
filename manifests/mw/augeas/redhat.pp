@@ -2,7 +2,7 @@ class generic-tmpl::mw::augeas::redhat {
 
   include ::augeas::redhat
 
-  if $operatingsystem =~ /RedHat|CentOS/ and $lsbmajdistrelease == '6' {
+  if versioncmp($augeasversion, '0.10.0') < 0 {
     # nrpe.aug has bugs in 0.9.0, so we backport it from 0.10.0
     # (and remove the original one so that augeas uses ours)
     augeas::lens{'nrpe':
