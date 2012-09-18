@@ -5,6 +5,7 @@ class generic-tmpl::mw-devel {
     "libxml2-utils": ensure => present; # xml utilities
     "pyflakes":      ensure => present; # python static code checker
     "pylint":        ensure => present; # python static code checker
+    'colordiff':     ensure => present; # tool to colorize 'diff' output
   }
 
 }
