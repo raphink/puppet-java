@@ -5,17 +5,11 @@ class generic-tmpl::mw::postgresql::v9 {
     fail "${name} not tested on $::operatingsystem/$::lsbdistcodename"
   }
 
-  $version = $postgresql_version ? {
-    ''      => '9.0',
-    default => $postgresql_version
+  if $postgresql_version == '' {
+    $postgresql_version = '9.0'
   }
 
-  case $version {
-    '9.0'   : { include postgresql::v9-0 }
-    '9.1'   : { include postgresql::v9-1 }
-    default : { fail "unsupported version ${version}" }
-  }
-
+  include postgresql
   include postgresql::backup
   include postgresql::administration
 

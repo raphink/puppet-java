@@ -1,6 +1,8 @@
-class generic-tmpl::mw-postgresql-8-3 {
+class generic-tmpl::mw::postgresql::v8-3 {
 
-  include postgresql::v8-3
+  $postgresql_version = '8.3'
+
+  include postgresql
   include postgresql::backup
   include postgresql::administration
 
