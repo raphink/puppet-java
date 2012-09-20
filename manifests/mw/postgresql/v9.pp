@@ -24,7 +24,7 @@ class generic-tmpl::mw::postgresql::v9 {
     priority => '1100',
   }
 
-  package {"postgresql-plperl-${$postgresql_version}":
+  package {"postgresql-plperl-${postgresql_version}":
     ensure => present,
   }
 
