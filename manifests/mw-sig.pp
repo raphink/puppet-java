@@ -38,7 +38,9 @@ class generic-tmpl::mw-sig {
   include apache::reverseproxy
 
   package {"libapache2-mod-wsgi": ensure => present, }
-  apache::module {"headers": ensure => present, }
+  if !defined(Apache::Module["headers"]) {
+    apache::module {"headers": ensure => present, }
+  }
 
   # other packages for MapFish
 
