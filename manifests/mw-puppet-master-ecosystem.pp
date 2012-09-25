@@ -1,13 +1,51 @@
 class generic-tmpl::mw-puppet-master-ecosystem {
 
-  include githubsync::dashboard
-  include githubsync::nagios
+  include githubsync
   include git-subtree
   include puppet::lint
 
   motd::message { "zzz-githubsync-status":
     source  => "file:///var/local/run/githubsync/current-status.txt",
-    require => File["/var/local/run/githubsync/current-status.txt"],
+  }
+
+  #TODO: fix this stupid discrepency !
+  $origin = $operatingsystem ? {
+    RedHat => "/srv/puppetmaster/staging/puppetmaster/",
+    Debian => "/srv/puppetmaster/staging/",
+  }
+
+  cron { 'update githubsync status':
+    command => "/usr/local/bin/githubsync.sh https camptocamp ${origin} 2>&1 | logger -t githubsync",
+    ensure  => present,
+    user    => 'githubsync',
+    hour    => '3',
+    minute  => fqdn_rand(60),
+    require => [Class["githubsync"],
+  }
+
+  file { "/var/local/run/githubsync/.netrc":
+    mode    => 0600,
+    owner   => "githubsync",
+    group   => "githubsync",
+    before  => File["/usr/local/bin/githubsync.sh"],
+    require => User["githubsync"],
+    content => '# file managed by puppet
+machine github.com
+login c2c-modules-subtree-sync
+password paipah6Icose1aeD
+',
+  }
+
+  file { "/var/local/run/githubsync/.gitconfig":
+    mode    => 0644,
+    owner   => "githubsync",
+    group   => "githubsync",
+    require => User["githubsync"],
+    content => '# file managed by puppet
+[user]
+  name = githubsync friendly robot
+  email = sysadmin@camptocamp.com
+',
   }
 
   file {'/usr/local/bin/puppetstoredconfigclean.rb':
@@ -16,41 +54,6 @@ class generic-tmpl::mw-puppet-master-ecosystem {
     owner   => 'root',
     group   => 'root',
     mode    => 0755,
-  }
-
-  file { "/var/local/run/githubsync/.netrc":
-    mode    => 0600,
-    owner   => "githubsync",
-    group   => "githubsync",
-    before  => File["/usr/local/bin/githubsync-update-status.sh"],
-    content => '# file managed by puppet
-machine github.com
-login c2c-modules-subtree-sync
-password paipah6Icose1aeD
-',
-  }
-
-#  monitoring::check { "GitHub sync":
-#    ensure   => present,
-#    codename => "check_github_module_sync",
-#    command  => "check-github-module-sync.sh",
-#    base     => "/var/local/run/githubsync/nagios-plugins",
-#    type     => "passive",
-#    interval => "60", # once an hour
-#    retry    => "60", # once an hour
-#    server   => $nagios_nsca_server,
-#    server_tag => $nagios_nsca_export_for ? {
-#      "" => false,
-#      default => $nagios_nsca_export_for
-#    },
-#    require   => Class["githubsync::nagios"],
-#  }
-
-  file { "/var/local/run/githubsync/.ssh":
-    ensure  => absent,
-    purge   => true,
-    force   => true,
-    recurse => true,
   }
 
   # We provide packages for Puppet 0.25 only
