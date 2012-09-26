@@ -10,10 +10,10 @@ class generic-tmpl::mw-puppet-master-ecosystem {
 
   user { "githubsync":
     ensure  => present,
-    shell  => "/bin/sh",
-    home   => "/var/local/run/githubsync",
-    #TODO: fix this one too...
-    $groups => $::domain ? {
+    shell   => "/bin/sh",
+    home    => "/var/local/run/githubsync",
+    #TODO: fix this stupid discrepency !
+    groups  => $::domain ? {
       /epfl\.ch$/          => ['admin-puppetmaster'],
       /compute\.internal$/ => ['puppet-admin'],
       /camptocamp\.com$/   => ['sysadmin'],
@@ -33,7 +33,7 @@ class generic-tmpl::mw-puppet-master-ecosystem {
     user    => 'githubsync',
     hour    => '3',
     minute  => fqdn_rand(60),
-    require => [Class["githubsync"],
+    require => [Class["githubsync"]],
   }
 
   file { "/var/local/run/githubsync/.netrc":
