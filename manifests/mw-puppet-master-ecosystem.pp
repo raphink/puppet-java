@@ -8,8 +8,21 @@ class generic-tmpl::mw-puppet-master-ecosystem {
     source  => "file:///var/local/run/githubsync/current-status.txt",
   }
 
+  user { "githubsync":
+    ensure  => present,
+    shell  => "/bin/sh",
+    home   => "/var/local/run/githubsync",
+    #TODO: fix this one too...
+    $groups => $::domain ? {
+      /epfl\.ch$/          => ['admin-puppetmaster'],
+      /compute\.internal$/ => ['puppet-admin'],
+      /camptocamp\.com$/   => ['sysadmin'],
+      /bl\.ch/             => ['puppet-admin'],
+    },
+  }
+
   #TODO: fix this stupid discrepency !
-  $origin = $operatingsystem ? {
+  $origin = $::operatingsystem ? {
     RedHat => "/srv/puppetmaster/staging/puppetmaster/",
     Debian => "/srv/puppetmaster/staging/",
   }
