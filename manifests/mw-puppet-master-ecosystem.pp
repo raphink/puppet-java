@@ -22,9 +22,11 @@ class generic-tmpl::mw-puppet-master-ecosystem {
   }
 
   #TODO: fix this stupid discrepency !
-  $origin = $::operatingsystem ? {
-    RedHat => "/srv/puppetmaster/staging/puppetmaster/",
-    Debian => "/srv/puppetmaster/staging/",
+  $origin = $::domain ? {
+    /compute\.internal$/ => '/srv/puppetmaster/staging/',
+    /camptocamp\.com$/   => '/srv/puppetmaster/staging/',
+    /bl\.ch/             => '/srv/puppetmaster/staging/puppetmaster/',
+    /epfl\.ch/           => '/srv/puppetmaster/staging/puppetmaster/',
   }
 
   cron { 'update githubsync status':
