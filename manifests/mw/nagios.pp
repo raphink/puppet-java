@@ -13,5 +13,5 @@ class generic-tmpl::mw::nagios {
     }
   }
 
-  include nagios
+  include ::nagios
 }
