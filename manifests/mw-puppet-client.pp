@@ -15,26 +15,23 @@ class generic-tmpl::mw-puppet-client {
 
   include puppet::client::cron
 
-  if (versioncmp($::puppetversion, 2) < 0) {
-    case $operatingsystem {
-      /Debian|Ubuntu/: {
+  case $operatingsystem {
+    /Debian|Ubuntu/: {
 
-        apt::preferences {"facter":
-          ensure   => present,
-          pin      => "release o=Camptocamp, n=${lsbdistcodename}",
-          priority => 1100,
-        }
+      apt::preferences {"facter":
+        ensure   => present,
+        pin      => "release o=Camptocamp, n=${lsbdistcodename}",
+        priority => 1100,
+      }
 
-        # this means: give high priority to packages from our reprepro, with
-        # codename squeeze/lenny (!= squeeze-backports for example)
-        # Add a similar resource with higher priority to install, say packages
-        # from squeeze-backports or whatever experimental or legacy package repo.
-        apt::preferences {["puppet", "puppet-common"]:
-          ensure   => present,
-          pin      => "release o=Camptocamp, n=${lsbdistcodename}",
-          priority => 1100,
-        }
-
+      # this means: give high priority to packages from our reprepro, with
+      # codename squeeze/lenny (!= squeeze-backports for example)
+      # Add a similar resource with higher priority to install, say packages
+      # from squeeze-backports or whatever experimental or legacy package repo.
+      apt::preferences {["puppet", "puppet-common"]:
+        ensure   => present,
+        pin      => "release o=Camptocamp, n=${lsbdistcodename}",
+        priority => 1100,
       }
     }
   }
