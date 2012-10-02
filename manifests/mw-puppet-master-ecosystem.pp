@@ -71,18 +71,15 @@ password paipah6Icose1aeD
     mode    => 0755,
   }
 
-  # We provide packages for Puppet 0.25 only
-  if $puppetmaster_legacy {
-    case $operatingsystem {
-      /Debian|Ubuntu/: {
+  case $operatingsystem {
+    /Debian|Ubuntu/: {
 
-        package { ['puppet-el', 'vim-puppet']: ensure => present }
+      package { ['puppet-el', 'vim-puppet']: ensure => present }
 
-        apt::preferences {['puppetmaster', 'puppet-el', 'puppet-testsuite', 'vim-puppet']:
-          ensure   => present,
-          pin      => "release o=Camptocamp, n=${lsbdistcodename}",
-          priority => 1100,
-        }
+      apt::preferences {['puppetmaster', 'puppetmaster-common', 'puppet-el', 'puppet-testsuite', 'vim-puppet']:
+        ensure   => present,
+        pin      => "release o=Camptocamp, n=${lsbdistcodename}",
+        priority => 1100,
       }
     }
   }
