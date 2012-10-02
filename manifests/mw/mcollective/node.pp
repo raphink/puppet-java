@@ -33,17 +33,28 @@ class generic-tmpl::mw::mcollective::node {
       # Until mcollective includes it by default
       package {'mcollective-plugins-uapt':
         ensure  => present,
-        notify  => Service['mcollective'],
-        require => Apt::Preferences['mcollective-plugins-uapt'],
+        notify  => Exec['reload mcollective'],
       }
 
       apt::preferences {'mcollective-plugins-uapt':
         pin      => 'release o=Camptocamp',
         priority => '1100',
       }
+
+      apt::preferences {'mcollective-puppetcert-agent':
+        pin      => 'release o=Camptocamp',
+        priority => '1100',
+      }
     }
 
     default: { }
+  }
+
+  # FIXME: this package was built by "mco plugin package" and doesn't match the
+  # name mcollective::plugin expects.
+  package {'mcollective-puppetcert-agent':
+    ensure  => present,
+    notify  => Exec['reload mcollective'],
   }
 
   mcollective::plugin { $agents:
