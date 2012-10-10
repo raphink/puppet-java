@@ -35,4 +35,12 @@ class generic-tmpl::mw-puppet-client {
       }
     }
   }
+
+  if (versioncmp($::puppetversion, 2) > 0) {
+    augeas { 'remove legacy puppetd section':
+      lens    => 'Puppet.lns',
+      incl    => '/etc/puppet/puppet.conf',
+      changes => 'rm puppetd',
+    }
+  }
 }
