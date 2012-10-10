@@ -71,6 +71,14 @@ password paipah6Icose1aeD
     mode    => 0755,
   }
 
+  if (versioncmp($::puppetversion, 2) > 0) {
+    augeas { 'remove legacy puppetmasterd section':
+      lens    => 'Puppet.lns',
+      incl    => '/etc/puppet/puppet.conf',
+      changes => 'rm puppetmasterd',
+    }
+  }
+
   case $operatingsystem {
     /Debian|Ubuntu/: {
 
