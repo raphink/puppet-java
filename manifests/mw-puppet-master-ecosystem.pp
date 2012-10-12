@@ -102,7 +102,10 @@ password paipah6Icose1aeD
     augeas { 'remove legacy puppetmasterd section':
       lens    => 'Puppet.lns',
       incl    => '/etc/puppet/puppet.conf',
-      changes => 'rm puppetmasterd',
+      changes => [
+        'rm puppetmasterd',
+        'rm puppetca',
+      ],
     }
   }
 
