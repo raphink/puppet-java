@@ -4,6 +4,9 @@ class generic-tmpl::mw-puppet-master-ecosystem {
   include git-subtree
   include puppet::lint
 
+  $puppetdbtype = 'mysql'
+  include puppet::master::mongrel::plain
+
   motd::message { "zzz-githubsync-status":
     source  => "file:///var/local/run/githubsync/current-status.txt",
   }
@@ -27,6 +30,33 @@ class generic-tmpl::mw-puppet-master-ecosystem {
     /camptocamp\.com$/   => '/srv/puppetmaster/staging/',
     /bl\.ch/             => '/srv/puppetmaster/staging/puppetmaster/',
     /epfl\.ch/           => '/srv/puppetmaster/staging/puppetmaster/',
+  }
+
+  puppet::environment {
+    'stable':     path => '/srv/puppetmaster/stable';
+    'staging':    path => '/srv/puppetmaster/staging';
+    'marc':       path => '/home/marc';
+    'mbornoz':    path => '/home/mbornoz';
+    'cjeanneret': path => '/home/cjeanneret';
+    'ckaenzig':   path => '/home/ckaenzig';
+    'mremy':      path => '/home/mremy';
+    'rpinson':    path => '/home/rpinson';
+    'illambias':  path => '/home/illambias';
+    'jbove':      path => '/home/jbove';
+  }
+
+  Puppet::Config {
+    notify => Service['puppetmaster'],
+  }
+
+  puppet::config {
+   'master/reports':    value => 'store log irc';
+   'master/dbname':     value => 'puppet';
+   'master/dbserver':   value => 'localhost';
+   'master/dbuser':     value => 'puppet';
+   'master/dbpassword': value => 'puppet';
+   'master/dbadapter':  value => 'mysql';
+   'master/dbsocket':   value => '/var/lib/mysql/mysql.sock';
   }
 
   cron { 'update githubsync status':
