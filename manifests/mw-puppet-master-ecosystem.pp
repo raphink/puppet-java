@@ -51,7 +51,6 @@ class generic-tmpl::mw-puppet-master-ecosystem {
 
   puppet::config {
    'master/reports':    value => 'store log irc';
-   'master/dbname':     value => 'puppet';
    'master/dbserver':   value => 'localhost';
    'master/dbuser':     value => 'puppet';
    'master/dbpassword': value => 'puppet';
