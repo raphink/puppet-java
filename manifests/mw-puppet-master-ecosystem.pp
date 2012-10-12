@@ -5,6 +5,10 @@ class generic-tmpl::mw-puppet-master-ecosystem {
   include puppet::lint
 
   $puppetdbtype = 'mysql'
+  $puppetdbhost = 'localhost'
+  $puppetdbname = 'puppet'
+  $puppetdbuser = 'puppet'
+  $puppetdbpw   = 'puppet'
   include puppet::master::mongrel::plain
 
   motd::message { "zzz-githubsync-status":
@@ -49,14 +53,7 @@ class generic-tmpl::mw-puppet-master-ecosystem {
     notify => Service['puppetmaster'],
   }
 
-  puppet::config {
-   'master/reports':    value => 'store log irc';
-   'master/dbserver':   value => 'localhost';
-   'master/dbuser':     value => 'puppet';
-   'master/dbpassword': value => 'puppet';
-   'master/dbadapter':  value => 'mysql';
-   'master/dbsocket':   value => '/var/lib/mysql/mysql.sock';
-  }
+  puppet::config { 'master/reports': value => 'store log irc' }
 
   cron { 'update githubsync status':
     command => "/usr/local/bin/githubsync.sh https camptocamp ${origin} 2>&1 | logger -t githubsync",
