@@ -121,4 +121,40 @@ password paipah6Icose1aeD
       }
     }
   }
+
+  package { 'carrier-pigeon':
+    ensure => present,
+    name => $::operatingsystem ? {
+      'RedHat' => 'carrier-pigeon',
+      'Debian' => 'ruby-carrier-pigeon',
+    },
+    provider => $::operatingsystem ? {
+      'RedHat' => 'gem',
+      'Debian' => 'apt',
+    },
+  }
+
+  package { 'addressable':
+    ensure => present,
+    name => $::operatingsystem ? {
+      'RedHat' => 'addressable',
+      'Debian' => 'libaddressable-ruby',
+    },
+    provider => $::operatingsystem ? {
+      'RedHat' => 'gem',
+      'Debian' => 'apt',
+    },
+  }
+
+  file { '/etc/puppet/irc.yaml':
+    ensure  => present,
+    content => "---
+:irc_server: 'irc://${::hostname}@irc.geeknode.org:6667#c2c-sysadmin'
+:irc_ssl: false
+:irc_register_first: false
+",
+    notify  => Service['puppetmaster'],
+    require => Package['carrier-pigeon', 'addressable'],
+  }
+
 }
