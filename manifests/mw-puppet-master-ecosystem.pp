@@ -9,6 +9,7 @@ class generic-tmpl::mw-puppet-master-ecosystem {
   $puppetdbname = 'puppet'
   $puppetdbuser = 'puppet'
   $puppetdbpw   = 'puppet'
+  $ca_root      = '/srv/puppetca'
   include puppet::master::mongrel::plain
 
   motd::message { "zzz-githubsync-status":
