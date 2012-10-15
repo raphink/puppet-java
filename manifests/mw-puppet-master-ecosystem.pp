@@ -54,7 +54,7 @@ class generic-tmpl::mw-puppet-master-ecosystem {
     notify => Service['puppetmaster'],
   }
 
-  puppet::config { 'master/reports': value => 'store log irc' }
+  puppet::config { 'master/reports': value => 'store,log,irc' }
 
   cron { 'update githubsync status':
     command => "/usr/local/bin/githubsync.sh https camptocamp ${origin} 2>&1 | logger -t githubsync",
