@@ -152,6 +152,7 @@ password paipah6Icose1aeD
 :irc_server: 'irc://${::hostname}@irc.geeknode.org:6667#c2c-sysadmin'
 :irc_ssl: false
 :irc_register_first: false
+:irc_join: false
 ",
     notify  => Service['puppetmaster'],
     require => Package['carrier-pigeon', 'addressable'],
