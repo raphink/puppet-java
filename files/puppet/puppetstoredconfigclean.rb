@@ -51,7 +51,7 @@ printusage(1) unless ARGV.size > 0
 require 'puppet/rails'
 Puppet[:config] = config
 Puppet.parse_config
-pm_conf = Puppet.settings.instance_variable_get(:@values)[:puppetmasterd]
+pm_conf = Puppet.settings.instance_variable_get(:@values)[:master]
 
 adapter = pm_conf[:dbadapter]
 args = {:adapter => adapter, :log_level => pm_conf[:rails_loglevel]}
