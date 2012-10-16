@@ -8,13 +8,15 @@ class generic-tmpl::mw-devel {
     'colordiff':     ensure => present; # tool to colorize 'diff' output
   }
 
-  # tmux from squeeze backports
-  apt::preferences {'tmux':
-    pin      => 'release a=squeeze-backports',
-    priority => 1100,
-  }
-  package {'tmux':
-    ensure => present,
+  if $::lsbdistcodename == 'squeeze' {
+    # tmux from squeeze backports
+    apt::preferences {'tmux':
+      pin      => 'release a=squeeze-backports',
+      priority => 1100,
+    }
+    package {'tmux':
+      ensure => present,
+    }
   }
 
 }
