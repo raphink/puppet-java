@@ -6,4 +6,8 @@ class generic-tmpl::os::login_defs {
       'set UID_MAX 60000',
     ],
   }
+
+  Augeas['Set first and last uids'] -> User <| |>
+  Augeas['Set first and last uids'] -> Group <| |>
+  Augeas['Set first and last uids'] -> Package <| |>
 }
