@@ -9,21 +9,21 @@
 #
 class generic-tmpl::mw::augeas {
 
-  $augeas_version = $operatingsystem ? {
-    /RedHat|CentOS/ => $lsbmajdistrelease ? {
-      5 => "0.10.0-3.el${lsbmajdistrelease}",
-      4 => "0.10.0-3.el${lsbmajdistrelease}",
+  $augeas_version = $::operatingsystem ? {
+    /RedHat|CentOS/ => $::lsbmajdistrelease ? {
+      5       => "0.10.0-3.el${::lsbmajdistrelease}",
+      4       => "0.10.0-3.el${::lsbmajdistrelease}",
       default => 'present',
     },
-    /Debian|Ubuntu/ => $lsbdistcodename ? {
+    /Debian|Ubuntu/ => $::lsbdistcodename ? {
       lenny    => '0.10.0-0ubuntu4~c2c~lenny2',
       squeeze  => '0.10.0-0ubuntu4~c2c~squeeze1',
       default  => 'present',
     },
   }
 
-  $augeas_ruby_version = $operatingsystem ? {
-    /Debian|Ubuntu/ => $lsbdistcodename ? {
+  $augeas_ruby_version = $::operatingsystem ? {
+    /Debian|Ubuntu/ => $::lsbdistcodename ? {
       lenny    => '0.3.0-1.1~c2c~lenny2',
       default  => 'present',
     },
@@ -31,12 +31,12 @@ class generic-tmpl::mw::augeas {
     default => 'present',
   }
 
-  case $operatingsystem {
+  case $::operatingsystem {
     /Debian|Ubuntu/: {
       include generic-tmpl::mw::augeas::debian
     }
     /RedHat|CentOS/: {
       include generic-tmpl::mw::augeas::redhat
     }
-  } 
+  }
 }
