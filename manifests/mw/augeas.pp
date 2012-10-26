@@ -39,4 +39,13 @@ class generic-tmpl::mw::augeas {
       include generic-tmpl::mw::augeas::redhat
     }
   }
+
+  # remove legacy custom lens location to avoid confusion.
+  # use augeas::lens instead please.
+  file { '/usr/share/augeas/lenses/contrib':
+    ensure  => absent,
+    purge   => true,
+    recurse => true,
+    force   => true,
+  }
 }
