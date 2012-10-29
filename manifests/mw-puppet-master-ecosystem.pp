@@ -4,7 +4,12 @@ class generic-tmpl::mw-puppet-master-ecosystem {
   include git-subtree
   include puppet::lint
 
-  $puppetdbtype = 'mysql'
+  if $::operatingsystem and versioncmp($::lsbdistrelease, '6.0') >= 0 {
+    $puppetdbtype = 'mysql2'
+  }
+  else {
+    $puppetdbtype = 'mysql'
+  }
   $puppetdbhost = 'localhost'
   $puppetdbname = 'puppet'
   $puppetdbuser = 'puppet'
