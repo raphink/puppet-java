@@ -50,6 +50,7 @@ class generic-tmpl::mw-puppet-master-ecosystem {
     'rpinson':    path => '/home/rpinson';
     'illambias':  path => '/home/illambias';
     'jbove':      path => '/home/jbove';
+    'francois':   path => '/home/francois';
   }
 
   Puppet::Config {
