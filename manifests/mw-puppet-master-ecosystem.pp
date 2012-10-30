@@ -16,7 +16,7 @@ class generic-tmpl::mw-puppet-master-ecosystem {
   $puppetdbpw   = 'puppet'
   $puppetdbconnections = '20'
   $ca_root      = '/srv/puppetca'
-  include puppet::master::mongrel::plain
+  include puppet::master::standalone::plain
   include puppet::database::mysql
 
   motd::message { "zzz-githubsync-status":
