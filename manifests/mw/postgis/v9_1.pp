@@ -14,9 +14,4 @@ class generic-tmpl::mw::postgis::v9_1 {
     priority => '1100',
   }
 
-  apt::preferences { ['libproj0', 'proj-data']:
-    pin      => 'release o=Camptocamp',
-    priority => '1100',
-  }
-
 }
