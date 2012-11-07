@@ -67,14 +67,14 @@ class generic-tmpl::mw-sig {
   }
 
   # Apache module for Mapserver
-  package {"libapache2-mod-fcgid": ensure => present, }
-  apache::module {"fcgid": ensure => present, }
-  
+  package {'libapache2-mod-fcgid': ensure => present, }
+  apache::module {'fcgid': ensure => present, }
+
   if $repository == 'staging' {
     # set up python eggs directory only for staging now
     file {'/var/cache/python-eggs':
       ensure => directory,
-      mode   => 0755,
+      mode   => '0755',
       owner  => 'www-data',
       group  => 'www-data',
     }
@@ -85,4 +85,8 @@ class generic-tmpl::mw-sig {
     }
   }
 
+  apt::preferences { ['libproj0', 'proj-data']:
+    pin      => 'release o=Camptocamp',
+    priority => '1100',
+  }
 }
