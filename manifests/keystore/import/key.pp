@@ -16,7 +16,7 @@ Require:
 
 */
 define java::keystore::import::key ($ensure=present,
-                                    $pkey,
+                                    $pkey='',
                                     $cert,
                                     $pkey_pass,
                                     $keystore='${JAVA_HOME}/jre/lib/security/cacerts',
