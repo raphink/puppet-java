@@ -164,4 +164,9 @@ password paipah6Icose1aeD
     require => Package['carrier-pigeon', 'addressable'],
   }
 
+  file { '/usr/local/bin/git-irc-hook.sh':
+    source => 'puppet:///modules/generic-tmpl/git-irc-hook.sh',
+    mode   => 0755,
+  }
+
 }
