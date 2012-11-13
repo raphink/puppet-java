@@ -6,6 +6,7 @@ class generic-tmpl::mw-devel {
     "pyflakes":      ensure => present; # python static code checker
     "pylint":        ensure => present; # python static code checker
     'colordiff':     ensure => present; # tool to colorize 'diff' output
+    'virtualenvwrapper': ensure => present;
   }
 
   if $::lsbdistcodename == 'squeeze' {
