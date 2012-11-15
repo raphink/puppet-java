@@ -5,9 +5,7 @@ class generic-tmpl::mw-devel {
     "libxml2-utils": ensure => present; # xml utilities
     "pyflakes":      ensure => present; # python static code checker
     "pylint":        ensure => present; # python static code checker
-    'pep8':          ensure => present; # yet another static code checker
     'colordiff':     ensure => present; # tool to colorize 'diff' output
-    'virtualenvwrapper': ensure => present;
   }
 
   if $::lsbdistcodename == 'squeeze' {
@@ -21,4 +19,10 @@ class generic-tmpl::mw-devel {
     }
   }
 
+  if versioncmp($::lsbmajdistrelease, '6') >= 0 {
+    package {
+      'pep8':              ensure => present; # yet another static code checker
+      'virtualenvwrapper': ensure => present;
+    }
+  }
 }
