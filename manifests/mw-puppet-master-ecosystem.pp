@@ -1,4 +1,4 @@
-class generic-tmpl::mw-puppet-master-ecosystem {
+class generic-tmpl::mw-puppet-master-ecosystem( $report_log_retention = '5d' ) {
 
   include githubsync
   include git-subtree
@@ -63,6 +63,13 @@ class generic-tmpl::mw-puppet-master-ecosystem {
   }
 
   puppet::config { 'master/reports': value => 'store,log,irc' }
+
+  tidy { '/var/lib/puppet/reports':
+    age     => $report_log_retention,
+    recurse => true,
+    backup  => false,
+    matches => '*.yaml',
+  }
 
   cron { 'update githubsync status':
     command => "/usr/local/bin/githubsync.sh https camptocamp ${origin} 2>&1 | logger -t githubsync",
