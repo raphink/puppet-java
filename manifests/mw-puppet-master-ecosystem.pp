@@ -19,14 +19,14 @@ class generic-tmpl::mw-puppet-master-ecosystem( $report_log_retention = '5d' ) {
   include puppet::master::standalone::plain
   include puppet::database::mysql
 
-  motd::message { "zzz-githubsync-status":
-    source  => "file:///var/local/run/githubsync/current-status.txt",
+  motd::message { 'zzz-githubsync-status':
+    source  => 'file:///var/local/run/githubsync/current-status.txt',
   }
 
-  user { "githubsync":
+  user { 'githubsync':
     ensure  => present,
-    shell   => "/bin/sh",
-    home    => "/var/local/run/githubsync",
+    shell   => '/bin/sh',
+    home    => '/var/local/run/githubsync',
     #TODO: fix this stupid discrepency !
     groups  => $::domain ? {
       /epfl\.ch$/          => ['admin-puppetmaster'],
@@ -66,26 +66,27 @@ class generic-tmpl::mw-puppet-master-ecosystem( $report_log_retention = '5d' ) {
 
   tidy { '/var/lib/puppet/reports':
     age     => $report_log_retention,
+    type    => 'ctime',
     recurse => true,
     backup  => false,
     matches => '*.yaml',
   }
 
   cron { 'update githubsync status':
-    command => "/usr/local/bin/githubsync.sh https camptocamp ${origin} 2>&1 | logger -t githubsync",
     ensure  => present,
+    command => "/usr/local/bin/githubsync.sh https camptocamp ${origin} 2>&1 | logger -t githubsync",
     user    => 'githubsync',
     hour    => '3',
     minute  => fqdn_rand(60),
-    require => [Class["githubsync"]],
+    require => [Class['githubsync']],
   }
 
-  file { "/var/local/run/githubsync/.netrc":
-    mode    => 0600,
-    owner   => "githubsync",
-    group   => "githubsync",
-    before  => File["/usr/local/bin/githubsync.sh"],
-    require => User["githubsync"],
+  file { '/var/local/run/githubsync/.netrc':
+    mode    => '0600',
+    owner   => 'githubsync',
+    group   => 'githubsync',
+    before  => File['/usr/local/bin/githubsync.sh'],
+    require => User['githubsync'],
     content => '# file managed by puppet
 machine github.com
 login c2c-modules-subtree-sync
@@ -93,11 +94,11 @@ password paipah6Icose1aeD
 ',
   }
 
-  file { "/var/local/run/githubsync/.gitconfig":
-    mode    => 0644,
-    owner   => "githubsync",
-    group   => "githubsync",
-    require => User["githubsync"],
+  file {'/var/local/run/githubsync/.gitconfig':
+    mode    => '0644',
+    owner   => 'githubsync',
+    group   => 'githubsync',
+    require => User['githubsync'],
     content => '# file managed by puppet
 [user]
   name = githubsync friendly robot
@@ -110,7 +111,7 @@ password paipah6Icose1aeD
     source  => 'puppet:///modules/generic-tmpl/puppet/puppetstoredconfigclean.rb',
     owner   => 'root',
     group   => 'root',
-    mode    => 0755,
+    mode    => '0755',
   }
 
   augeas { 'remove legacy puppetmasterd section':
@@ -122,16 +123,19 @@ password paipah6Icose1aeD
     ],
   }
 
-  case $operatingsystem {
-    /Debian|Ubuntu/: {
+  if $::operatingsystem =~ /Debian|Ubuntu/ {
+    package { ['puppet-el', 'vim-puppet']: ensure => present }
 
-      package { ['puppet-el', 'vim-puppet']: ensure => present }
-
-      apt::preferences {['puppetmaster', 'puppetmaster-common', 'puppet-el', 'puppet-testsuite', 'vim-puppet']:
-        ensure   => present,
-        pin      => "release o=Camptocamp, n=${lsbdistcodename}",
-        priority => 1100,
-      }
+    apt::preferences {[
+        'puppetmaster',
+        'puppetmaster-common',
+        'puppet-el',
+        'puppet-testsuite',
+        'vim-puppet'
+      ]:
+      ensure   => present,
+      pin      => "release o=Camptocamp, n=${::lsbdistcodename}",
+      priority => 1100,
     }
   }
 
@@ -173,7 +177,7 @@ password paipah6Icose1aeD
 
   file { '/usr/local/bin/git-irc-hook.sh':
     source => 'puppet:///modules/generic-tmpl/git-irc-hook.sh',
-    mode   => 0755,
+    mode   => '0755',
   }
 
 }
