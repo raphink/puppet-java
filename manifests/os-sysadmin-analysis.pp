@@ -10,6 +10,7 @@ class generic-tmpl::os-sysadmin-analysis {
     'psmisc',
     'smartmontools',
     'strace',
+    'sysstat',
     'tiobench',
     'tcpdump',
     ]:
