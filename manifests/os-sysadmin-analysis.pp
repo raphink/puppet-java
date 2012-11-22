@@ -26,6 +26,12 @@ class generic-tmpl::os-sysadmin-analysis {
         ]:
         ensure => present,
       }
+      augeas {'enable sysstat':
+        lens    => 'Shellvars.lns',
+        incl    => '/etc/default/sysstat',
+        changes => 'set ENABLED true',
+        require => Package['sysstat'],
+      }
     }
     CentOS,RedHat: {
       package { $lsbmajdistrelease ? {
