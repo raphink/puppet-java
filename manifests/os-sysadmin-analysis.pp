@@ -41,6 +41,15 @@ class generic-tmpl::os-sysadmin-analysis {
         ensure => present,
       }
     }
-    default: { }
+    default: {
+      # notice, warn and err are useless
+      # and a fail will be just as useless,
+      # overkill and noisy for nothing.
+      # But as "default" is mandatory, we
+      # have to write it down, as an empty case.
+      # And as some people say I don't write enough
+      # comments, here's one we won't miss in the
+      # code ;).
+    }
   }
 }
