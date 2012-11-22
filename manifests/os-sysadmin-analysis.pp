@@ -17,8 +17,8 @@ class generic-tmpl::os-sysadmin-analysis {
     ensure => present,
   }
 
-  case $::operatingsystem {
-    Debian,Ubuntu: {
+  case $::osfamily {
+    Debian: {
       package {[
         'ipcalc',
         'tshark',
@@ -33,7 +33,7 @@ class generic-tmpl::os-sysadmin-analysis {
         require => Package['sysstat'],
       }
     }
-    CentOS,RedHat: {
+    RedHat: {
       package { $::lsbmajdistrelease ? {
           '5' => ['sipcalc', 'jwhois'],
           '6' => ['jwhois'],
@@ -41,5 +41,6 @@ class generic-tmpl::os-sysadmin-analysis {
         ensure => present,
       }
     }
+    default: { }
   }
 }
