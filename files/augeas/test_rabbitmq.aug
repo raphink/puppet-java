@@ -64,7 +64,9 @@ test Rabbitmq.cluster_nodes get "{cluster_nodes, ['rabbit@rabbit1', 'rabbit@rabb
 
 (* Test: Rabbitmq.lns
      Top-level test *)
-test Rabbitmq.lns get "[
+test Rabbitmq.lns get "
+% A standard configuration
+[
   {rabbit, [
      {ssl_listeners, [5671]},
      {ssl_options, [{cacertfile,\"/path/to/testca/cacert.pem\"},
@@ -73,7 +75,10 @@ test Rabbitmq.lns get "[
                     {verify,verify_peer},
                     {fail_if_no_peer_cert,false}]}
    ]}
-].\n" =
+].
+% EOF\n" =
+  { }
+  { "#comment" = "A standard configuration" }
   { "rabbit"
     { "ssl_listeners"
       { "value" = "5671" } }
@@ -83,4 +88,5 @@ test Rabbitmq.lns get "[
       { "keyfile" = "/path/to/server/key.pem" }
       { "verify" = "verify_peer" }
       { "fail_if_no_peer_cert" = "false" } } }
+  { "#comment" = "EOF" }
 
