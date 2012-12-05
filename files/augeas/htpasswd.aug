@@ -32,7 +32,7 @@ module Htpasswd =
 autoload xfm
 
 let entry = Build.key_value_line Rx.word Sep.colon (store Rx.space_in)
-let lns = entry*
+let lns   = (Util.empty | Util.comment | entry)*
 
 let filter = incl "/etc/httpd/htpasswd"
            . incl "/etc/apache2/htpasswd"
