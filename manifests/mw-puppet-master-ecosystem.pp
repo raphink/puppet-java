@@ -53,6 +53,7 @@ class generic-tmpl::mw-puppet-master-ecosystem( $report_log_retention = '5d' ) {
     'ckaenzig':   path => '/home/ckaenzig';
     'mremy':      path => '/home/mremy';
     'rpinson':    path => '/home/rpinson';
+    'mcanevet':   path => '/home/mcanevet';
     'illambias':  path => '/home/illambias';
     'jbove':      path => '/home/jbove';
     'francois':   path => '/home/francois';
