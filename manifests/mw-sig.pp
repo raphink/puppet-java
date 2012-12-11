@@ -85,8 +85,5 @@ class generic-tmpl::mw-sig {
     }
   }
 
-  apt::preferences { ['libproj0', 'proj-data']:
-    pin      => 'release o=Camptocamp',
-    priority => '1100',
-  }
+  include ::generic-tmpl::backport::proj
 }
