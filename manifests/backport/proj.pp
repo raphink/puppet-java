@@ -1,6 +1,8 @@
 class generic-tmpl::backport::proj {
-  apt::preferences { ['libproj0', 'proj-data']:
-    pin      => 'release o=Camptocamp',
-    priority => '1100',
+  if ($::osfamily == 'Debian') {
+    apt::preferences { ['libproj0', 'proj-data']:
+      pin      => 'release o=Camptocamp',
+      priority => '1100',
+    }
   }
 }
