@@ -1,7 +1,7 @@
 class generic-tmpl::mw-puppet-master-ecosystem (
   $report_log_retention = '5d',
   $puppetmasters = '4',
-  $backend_name = 'puppetmaster-legacy',
+  $backend_name = 'puppetmaster-default',
   $dbhost = 'localhost',
   $dbname = 'puppet',
   $dbuser = 'puppet',
