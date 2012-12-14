@@ -1,13 +1,14 @@
 class generic-tmpl::mw-postgis-8-4 {
 
-  include generic-tmpl::os::pkgrepo::sig
+  include ::generic-tmpl::os::pkgrepo::sig
+  include ::generic-tmpl::backport::proj
 
   case $operatingsystem {
     Debian: {
-      include postgis::debian::v8-4
+      include ::postgis::debian::v8-4
     }
     Ubuntu: {
-      include postgis::ubuntu::v8-4
+      include ::postgis::ubuntu::v8-4
     }
   }
 
