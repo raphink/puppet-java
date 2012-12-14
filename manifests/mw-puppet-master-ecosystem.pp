@@ -1,23 +1,41 @@
-class generic-tmpl::mw-puppet-master-ecosystem( $report_log_retention = '5d' ) {
+class generic-tmpl::mw-puppet-master-ecosystem (
+  $report_log_retention = '5d',
+  $puppetmasters = '4',
+  $backend_name = 'puppetmaster-legacy',
+  $dbhost = 'localhost',
+  $dbname = 'puppet',
+  $dbuser = 'puppet',
+  $dbpassword   = 'puppet',
+  $dbconnections = '20',
+) {
 
   include githubsync
   include git-subtree
   include puppet::lint
 
   if $::operatingsystem == 'RedHat' and versioncmp($::lsbdistrelease, '6.0') >= 0 {
-    $puppetdbtype = 'mysql2'
+    $dbadapter = 'mysql2'
   }
   else {
-    $puppetdbtype = 'mysql'
+    $dbadapter = 'mysql'
   }
-  $puppetdbhost = 'localhost'
-  $puppetdbname = 'puppet'
-  $puppetdbuser = 'puppet'
-  $puppetdbpw   = 'puppet'
-  $puppetdbconnections = '20'
-  $ca_root      = '/srv/puppetca'
-  include puppet::master::standalone::plain
-  include puppet::database::mysql
+
+  class {'::puppet::master::standalone::plain':
+    puppetmasters => $puppetmasters,
+    backend_name  => $backend_name,
+    dbadapter     => $dbadapter,
+    dbhost        => $dbhost,
+    dbname        => $dbname,
+    dbuser        => $dbuser,
+    dbpassword    => $dbpassword,
+    dbconnections => $dbconnections,
+  }
+
+  class {'::puppet::database::mysql':
+    dbname        => $dbname,
+    dbuser        => $dbuser,
+    dbpassword    => $dbpassword,
+  }
 
   motd::message { 'zzz-githubsync-status':
     source  => 'file:///var/local/run/githubsync/current-status.txt',
