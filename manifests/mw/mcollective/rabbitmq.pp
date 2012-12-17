@@ -1,5 +1,5 @@
 class generic-tmpl::mw::mcollective::rabbitmq (
-  $cluster_disk_nodes,
+  $cluster_disk_nodes = [],
   $erlang_cookie,
 ) {
 
