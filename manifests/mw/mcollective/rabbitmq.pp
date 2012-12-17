@@ -1,4 +1,7 @@
-class generic-tmpl::mw::mcollective::rabbitmq {
+class generic-tmpl::mw::mcollective::rabbitmq (
+  $cluster_disk_nodes,
+  $erlang_cookie,
+) {
 
   # Copy SSL keys to give them the proper rights
   #file {
@@ -24,8 +27,8 @@ class generic-tmpl::mw::mcollective::rabbitmq {
   class { '::rabbitmq::server':
     env_config         => 'export SERVER_ERL_ARGS="$SERVER_ERL_ARGS -kernel inet_dist_listen_min 35197 -kernel inet_dist_listen_max 35197 -kernel net_ticktime 600"',
     config_cluster     => true,
-    cluster_disk_nodes => ['ip-10-49-21-59', 'bgdiback02p'],
-    erlang_cookie      => 'aeph4eel2Lu5sazeengohcaeDoorieng',
+    cluster_disk_nodes => $cluster_disk_nodes,
+    erlang_cookie      => $erlang_cookie,
     ssl                => true,
     ssl_cacert         => '/etc/rabbitmq/ssl/ca.pem',
     ssl_cert           => "/etc/rabbitmq/ssl/${::fqdn}.crt",
