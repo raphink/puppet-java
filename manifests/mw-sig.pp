@@ -70,6 +70,15 @@ class generic-tmpl::mw-sig {
   package {'libapache2-mod-fcgid': ensure => present, }
   apache::module {'fcgid': ensure => present, }
 
+  apache::confd {'mime-type-ogc':
+    configuration => '# Add support for OGC standard formats
+AddType application/vnd.ogc.context+xml .wmc
+AddType application/vnd.ogc.gml .gml
+AddType application/vnd.ogc.sld+xml .sld
+AddType application/vnd.google-earth.kml+xml .kml
+',
+  }
+
   if $repository == 'staging' {
     # set up python eggs directory only for staging now
     file {'/var/cache/python-eggs':
