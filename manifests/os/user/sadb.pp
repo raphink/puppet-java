@@ -52,16 +52,27 @@ define generic-tmpl::os::user::sadb (
       managehome => true,
       shell      => "/bin/bash",
       groups     => $groups,
-      require    => [ Group[$_username], Class["c2c::skel"] ],
+      require    => [ Group[$_username] ],
     }
   }
 
-  ssh_authorized_key{"${email}-on-${_onuser}":
-    ensure => $_ensure,
-    target => $target? {false => undef, default => $target },
-    user   => $target? {false => $_onuser, default => undef },
-    type   => $type,
-    key    => $key,
+  case $target {
+    false: {
+      ssh_authorized_key{"${email}-on-${_onuser}":
+        ensure => $_ensure,
+        user   => $_onuser,
+        type   => $type,
+        key    => $key,
+      }
+    }
+    default: {
+      ssh_authorized_key{"${email}-on-${_onuser}":
+        ensure => $_ensure,
+        target => $target,
+        type   => $type,
+        key    => $key,
+      }
+    }
   }
 
 }
