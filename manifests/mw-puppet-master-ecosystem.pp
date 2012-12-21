@@ -9,6 +9,7 @@ class generic-tmpl::mw-puppet-master-ecosystem (
   $dbconnections = '20',
   $ca = false,
   $ssldir = '',
+  $certname = '',
 ) {
 
   include githubsync
@@ -33,6 +34,7 @@ class generic-tmpl::mw-puppet-master-ecosystem (
     dbconnections => $dbconnections,
     ca            => $ca,
     ssldir        => $ssldir,
+    certname      => $certname,
   }
 
   class {'::puppet::database::mysql':
