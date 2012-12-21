@@ -12,12 +12,6 @@ define generic-tmpl::os::user::sadb (
   $target   = false
 ) {
 
-  # If ssh key type is 'none', the user is removed
-  $_ensure = $type ? {
-    'none'  => false,
-    default => $ensure,
-  }
-
   $_username = $username ? {
     false   => $name,
     default => $username,
@@ -32,6 +26,18 @@ define generic-tmpl::os::user::sadb (
   $type  = url_get("${sadb}/user/${_username}/ssh_pub_key_type")
   $key   = url_get("${sadb}/user/${_username}/ssh_pub_key")
 
+  # If ssh key type is 'none', the user is removed
+  $_ensure = $type ? {
+    'none'  => absent,
+    default => $ensure,
+  }
+
+  # type must be valid even just to remove a key so we
+  # can't pass 'none' to ssh_authorized_key
+  $_type = $_ensure ? {
+    absent => 'ssh-rsa',
+    default => $type,
+  }
 
   if ($_onuser == $_username) and (!defined(User[$_username])) {
 
@@ -40,7 +46,7 @@ define generic-tmpl::os::user::sadb (
     $uid       = url_get("${sadb}/user/${_username}/uid_number")
   
     group {$_username:
-      ensure => $ensure,
+      ensure => $_ensure,
       gid    => $uid,
     }
 
@@ -61,7 +67,7 @@ define generic-tmpl::os::user::sadb (
       ssh_authorized_key{"${email}-on-${_onuser}":
         ensure => $_ensure,
         user   => $_onuser,
-        type   => $type,
+        type   => $_type,
         key    => $key,
       }
     }
@@ -69,7 +75,7 @@ define generic-tmpl::os::user::sadb (
       ssh_authorized_key{"${email}-on-${_onuser}":
         ensure => $_ensure,
         target => $target,
-        type   => $type,
+        type   => $_type,
         key    => $key,
       }
     }
