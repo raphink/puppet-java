@@ -1,12 +1,14 @@
-class generic-tmpl::mw::postgresql::v9 {
+class generic-tmpl::mw::postgresql::v9 (
+  $version = $postgresql_version,
+) {
 
   # avoid partial configuration on untested-distribution
-  if $::lsbdistcodename !~ /^squeeze$/ {
+  if $::lsbdistcodename !~ /^(squeeze|wheezy)$/ {
     fail "${name} not tested on $::operatingsystem/$::lsbdistcodename"
   }
 
-  if $postgresql_version == '' {
-    $postgresql_version = '9.0'
+  if $version == '' {
+    $version = '9.0'
   }
 
   include postgresql
@@ -24,7 +26,7 @@ class generic-tmpl::mw::postgresql::v9 {
     priority => '1100',
   }
 
-  package {"postgresql-plperl-${postgresql_version}":
+  package {"postgresql-plperl-${version}":
     ensure => present,
   }
 
