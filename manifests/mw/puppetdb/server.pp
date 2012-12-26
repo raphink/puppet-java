@@ -39,7 +39,7 @@ class generic-tmpl::mw::puppetdb::server (
     ]
   }
 
-  class {'::java::v6':
+  class {'::generic-tmpl::mw::java::v6':
     before => Class['::puppetdb::server'],
   }
 
