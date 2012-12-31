@@ -9,7 +9,7 @@ class generic-tmpl::mw::augeas::debian {
 
   apt::preferences {'augeas':
     ensure   => present,
-    package  => "augeas-lenses augeas-tools libaugeas0 ${augeas_ruby}",
+    package  => "augeas-lenses augeas-tools augeas-doc libaugeas0 ${augeas_ruby}",
     pin      => 'release o=Camptocamp',
     priority => 1100;
   }
