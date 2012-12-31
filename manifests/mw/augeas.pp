@@ -11,32 +11,27 @@ class generic-tmpl::mw::augeas {
 
   $augeas_version = $::operatingsystem ? {
     /RedHat|CentOS/ => $::lsbmajdistrelease ? {
+      6       => "0.10.0-3.el${::lsbmajdistrelease}",
       5       => "0.10.0-3.el${::lsbmajdistrelease}",
       4       => "0.10.0-3.el${::lsbmajdistrelease}",
       default => 'present',
     },
-    /Debian|Ubuntu/ => $::lsbdistcodename ? {
-      lenny    => '0.10.0-0ubuntu4~c2c~lenny2',
-      squeeze  => '0.10.0-0ubuntu4~c2c~squeeze1',
-      default  => 'present',
-    },
+    /Debian|Ubuntu/ => 'present',
   }
 
   $augeas_ruby_version = $::operatingsystem ? {
-    /Debian|Ubuntu/ => $::lsbdistcodename ? {
-      lenny    => '0.3.0-1.1~c2c~lenny2',
-      default  => 'present',
-    },
-
     default => 'present',
   }
 
-  case $::operatingsystem {
-    /Debian|Ubuntu/: {
+  case $::osfamily {
+    Debian: {
       include generic-tmpl::mw::augeas::debian
     }
-    /RedHat|CentOS/: {
+    RedHat: {
       include generic-tmpl::mw::augeas::redhat
+    }
+    default: {
+      fail("Unsupported OS family ${::osfamily}")
     }
   }
 
