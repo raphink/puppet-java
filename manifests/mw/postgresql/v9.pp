@@ -8,7 +8,7 @@ class generic-tmpl::mw::postgresql::v9 (
   }
 
   if $version == '' {
-    $version = '9.0'
+    $_version = '9.0'
   }
 
   include postgresql
@@ -26,7 +26,7 @@ class generic-tmpl::mw::postgresql::v9 (
     priority => '1100',
   }
 
-  package {"postgresql-plperl-${version}":
+  package {"postgresql-plperl-${_version}":
     ensure => present,
   }
 
