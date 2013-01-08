@@ -7,8 +7,9 @@ class generic-tmpl::mw::postgresql::v9 (
     fail "${name} not tested on $::operatingsystem/$::lsbdistcodename"
   }
 
-  if $version == '' {
-    $_version = '9.0'
+  $_version = $version? {
+    ''      => '9.0',
+    default => $version,
   }
 
   include postgresql
