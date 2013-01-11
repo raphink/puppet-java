@@ -84,7 +84,7 @@ deb http://mirror.switch.ch/ftp/mirror/debian-security/ ${lsbdistcodename}/updat
           }
         }
     
-        /lucid|oneiric|precise/: {
+        /lucid|oneiric|precise|quantal/: {
           apt::sources_list { "$lsbdistcodename":
             content => "# file managed by puppet
 
