@@ -103,8 +103,8 @@ deb-src http://archive.canonical.com/ubuntu ${lsbdistcodename} partner
           } 
 
           case $lsbdistcodename {
-            "lucid":           { $c2c_components = "sysadmin openerp-client postgresql" }
-            /oneiric|precise/: { $c2c_components = "sysadmin openerp-client" }
+            "lucid":                 { $c2c_components = "sysadmin openerp-client postgresql" }
+            oneiric,precise,quantal: { $c2c_components = "sysadmin openerp-client" }
           }
 
           apt::sources_list {"c2c-${lsbdistcodename}-${repository}-sysadmin":
