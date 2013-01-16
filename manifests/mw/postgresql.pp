@@ -1,5 +1,5 @@
 class generic-tmpl::mw::postgresql (
-  version
+  $version,
 ) {
 
   class {'::postgresql':
@@ -9,8 +9,8 @@ class generic-tmpl::mw::postgresql (
   include ::postgresql::backup
   include ::postgresql::administration
 
-  if !defined(Package["python-psycopg2"]) {
-    package {"python-psycopg2":
+  if !defined(Package['python-psycopg2']) {
+    package {'python-psycopg2':
       ensure => present,
     }
   }
