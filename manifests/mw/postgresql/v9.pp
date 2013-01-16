@@ -7,28 +7,13 @@ class generic-tmpl::mw::postgresql::v9 (
     fail "${name} not tested on $::operatingsystem/$::lsbdistcodename"
   }
 
-  $_version = $version? {
-    ''      => '9.0',
-    default => $version,
-  }
-
-  include postgresql
-  include postgresql::backup
-  include postgresql::administration
-
-  if !defined(Package['python-psycopg2']) {
-    package {'python-psycopg2':
-      ensure => present,
-    }
+  class {'::generic-tmpl::mw::postgresql':
+    version => $version,
   }
 
   apt::preferences {'libpq-dev':
     pin      => 'release a=squeeze-backports',
     priority => '1100',
-  }
-
-  package {"postgresql-plperl-${_version}":
-    ensure => present,
   }
 
 }
