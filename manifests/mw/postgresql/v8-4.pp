@@ -1,26 +1,11 @@
-class generic-tmpl::mw::postgresql::v8-4 {
+class generic-tmpl::mw::postgresql::v8-4 (
+  $version='8.4',
+  $base_dir=$postgresql_base_dir,
+) {
 
-  $postgresql_version = '8.4'
-
-  include postgresql
-  include postgresql::backup
-  include postgresql::administration
-
-  if $lsbdistcodename == 'lenny' {
-    apt::preferences {'libpq-dev':
-      pin => 'release o=Camptocamp',
-      priority => 1100,
-    } 
-  } 
-
-  if !defined(Package["python-psycopg2"]) {
-    package {"python-psycopg2": 
-      ensure => present,
-    }
-  }
-
-  package {"postgresql-plperl-8.4":
-    ensure => present,
+  class {'::generic-tmpl::mw::postgresql':
+    version    => $version,
+    base_dir   => $base_dir,
   }
 
 }

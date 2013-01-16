@@ -1,19 +1,11 @@
-class generic-tmpl::mw::postgresql::v8-3 {
+class generic-tmpl::mw::postgresql::v8-3 (
+  $version='8.3',
+  $base_dir=$postgresql_base_dir,
+) {
 
-  $postgresql_version = '8.3'
-
-  include postgresql
-  include postgresql::backup
-  include postgresql::administration
-
-  if !defined(Package["python-psycopg2"]) {
-    package {"python-psycopg2":
-      ensure => present,
-    }
-  }
-
-  package {"postgresql-plperl-8.3":
-    ensure => present,
+  class {'::generic-tmpl::mw::postgresql':
+    version    => $version,
+    base_dir   => $base_dir,
   }
 
 }
