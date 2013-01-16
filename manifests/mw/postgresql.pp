@@ -1,6 +1,6 @@
 class generic-tmpl::mw::postgresql (
   $version,
-  base_dir=unset,
+  base_dir=undef,
 ) {
 
   class {'::postgresql':
