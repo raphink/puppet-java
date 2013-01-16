@@ -1,9 +1,11 @@
 class generic-tmpl::mw::postgresql (
   $version,
+  base_dir=unset,
 ) {
 
   class {'::postgresql':
-    version => $version,
+    version    => $version,
+    base_dir   => $base_dir,
   }
 
   include ::postgresql::backup
