@@ -21,7 +21,7 @@ class generic-tmpl::mw::postgresql (
 
   if $lsbdistcodename =~ /lenny|squeeze/ {
     apt::preferences {'libpq-dev':
-      pin      => "release a=${lsbdistcodename}-backports",
+      pin      => "release o=Camptocamp",
       priority => '1100',
     }
   }
