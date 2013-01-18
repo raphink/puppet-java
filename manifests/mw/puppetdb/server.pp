@@ -4,6 +4,7 @@ class generic-tmpl::mw::puppetdb::server (
   $key_source,
   $trust_password,
   $key_password,
+  $postgresql_version,
   $max_mem='1024m',
   $monitoring=true,
   $database_name='puppetdb',
@@ -43,7 +44,10 @@ class generic-tmpl::mw::puppetdb::server (
     before => Class['::puppetdb::server'],
   }
 
-  include ::generic-tmpl::mw::postgresql::v9
+  class { '::generic-tmpl::mw::postgresql':
+    version => $postgresql_version,
+  }
+
   class { '::puppetdb::database::postgresql':
     database_name     => $database_name,
     database_username => $database_username,
