@@ -2,6 +2,7 @@ class generic-tmpl::mw::postgresql (
   $version,
   $base_dir = undef,
   $backup_dir = undef,
+  $backup_format = undef,
 ) {
 
   class {'::postgresql':
@@ -10,8 +11,10 @@ class generic-tmpl::mw::postgresql (
   }
 
   class {'::postgresql::backup':
-    backup_dir => $backup_dir,
+    backup_dir    => $backup_dir,
+    backup_format => $backup_format,
   }
+
   include ::postgresql::administration
 
   if !defined(Package['python-psycopg2']) {
