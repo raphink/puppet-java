@@ -1,6 +1,7 @@
 class generic-tmpl::mw::postgresql::v9 (
   $version = $postgresql_version,
-  $base_dir=$postgresql_base_dir,
+  $base_dir = $postgresql_base_dir,
+  $backup_dir = $postgresql_backupdir,
 ) {
 
   # avoid partial configuration on untested-distribution
@@ -11,6 +12,7 @@ class generic-tmpl::mw::postgresql::v9 (
   class {'::generic-tmpl::mw::postgresql':
     version    => $version,
     base_dir   => $base_dir,
+    backup_dir => $backup_dir,
   }
 
 }
