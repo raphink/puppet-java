@@ -11,6 +11,8 @@ class generic-tmpl::mw::puppetdb::server (
   $database_username='puppetdb',
   $database_password='puppetdb',
   $postgresql_base_dir=undef,
+  $postgresql_backup_dir=undef,
+  $postgresql_backup_format=undef,
 ) {
   file {
     "/var/cache/java_keys/${server}.crt":
@@ -46,8 +48,10 @@ class generic-tmpl::mw::puppetdb::server (
   }
 
   class { '::generic-tmpl::mw::postgresql':
-    version  => $postgresql_version,
-    base_dir => $postgresql_base_dir,
+    version       => $postgresql_version,
+    base_dir      => $postgresql_base_dir,
+    backup_dir    => $postgresql_backup_dir,
+    backup_format => $postgresql_backup_format,
   }
 
   class { '::puppetdb::database::postgresql':
