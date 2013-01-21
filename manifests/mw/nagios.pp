@@ -1,27 +1,26 @@
 class generic-tmpl::mw::nagios {
 
+  $common_packages = [
+    'nagios3-core',
+    'nagios3-common',
+    'nagios-plugins',
+    'nagios-plugins-standard',
+    'nagios-plugins-basic'
+  ]
+
   if $::lsbdistcodename == 'lenny' {
-    apt::preferences {[
-      'nagios3-core',
-      'nagios3-common',
-      'nagios-plugins',
-      'nagios-plugins-standard',
-      'nagios-plugins-basic',
-      'nsca',
-    ]:
-        pin      => 'release o=Camptocamp',
-        priority => '1100',
-    }
+    $packages = common_packages + ['nsca']
+  } elsif $::lsbdistcodename == 'squeeze' {
+    $packages = $common_packages
+  } elsif $::lsbdistcodename == 'wheezy' {
+    $packages = ['nsca']
   }
 
-  if $::lsbdistcodename == 'wheezy' {
-    apt::preferences {[
-      'nsca',
-    ]:
-        pin      => 'release o=Camptocamp',
-        priority => '1100',
-    }
+  apt::preferences {$packages:
+    pin      => 'release o=Camptocamp',
+    priority => '1100',
   }
 
   include ::nagios
+
 }
