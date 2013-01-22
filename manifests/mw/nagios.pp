@@ -9,7 +9,7 @@ class generic-tmpl::mw::nagios {
   ]
 
   if $::lsbdistcodename == 'lenny' {
-    $packages = common_packages + ['nsca']
+    $packages = [$common_packages,['nsca']]
   } elsif $::lsbdistcodename == 'squeeze' {
     $packages = $common_packages
   } elsif $::lsbdistcodename == 'wheezy' {
