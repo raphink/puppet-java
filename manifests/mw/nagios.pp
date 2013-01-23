@@ -10,12 +10,11 @@ class generic-tmpl::mw::nagios {
       'nagios-plugins-basic'
     ]
 
-    if $::lsbdistcodename == 'lenny' {
-      $packages = [$common_packages,['nsca']]
-    } elsif $::lsbdistcodename == 'squeeze' {
-      $packages = $common_packages
-    } elsif $::lsbdistcodename == 'wheezy' {
-      $packages = ['nsca']
+    $packages = $::lsbdistcodename ? {
+      'lenny'   => [$common_packages,['nsca']],
+      'squeeze' => $common_packages,
+      'wheezy'  => ['nsca'],
+      default   => [],
     }
 
     apt::preferences {$packages:
