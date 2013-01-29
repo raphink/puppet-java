@@ -188,6 +188,10 @@ password paipah6Icose1aeD
     },
   }
 
+  package { 'git-email':
+    ensure => present,
+  }
+
   file { '/etc/puppet/irc.yaml':
     ensure  => present,
     content => "---
