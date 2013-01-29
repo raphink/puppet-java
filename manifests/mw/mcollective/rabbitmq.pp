@@ -54,6 +54,7 @@ class generic-tmpl::mw::mcollective::rabbitmq (
 
   rabbitmq_user { $user:
     password => $password,
+    admin    => true,
   }
 
   rabbitmq_user_permissions { "${user}@${vhost}":
@@ -64,10 +65,14 @@ class generic-tmpl::mw::mcollective::rabbitmq (
 
   rabbitmq_exchange {
     "mcollective_broadcast@${vhost}":
-      type => 'topic';
+      type     => 'topic',
+      user     => $user,
+      password => $password;
 
     "mcollective_directed@${vhost}":
-      type => 'direct';
+      type     => 'direct',
+      user     => $user,
+      password => $password;
   }
 
   case $::operatingsystem {
