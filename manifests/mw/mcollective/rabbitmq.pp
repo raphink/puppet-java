@@ -1,6 +1,9 @@
 class generic-tmpl::mw::mcollective::rabbitmq (
   $cluster_disk_nodes = [],
   $erlang_cookie,
+  $vhost = '/mcollective',
+  $user = 'mcollective',
+  $password,
 ) {
 
   # Copy SSL keys to give them the proper rights
@@ -43,8 +46,28 @@ class generic-tmpl::mw::mcollective::rabbitmq (
     #],
   }
 
-  rabbitmq_plugin {
-    ["amqp_client", "rabbitmq_stomp"]: ensure => present,
+  rabbitmq_plugin { ['amqp_client', 'rabbitmq_stomp']:
+    ensure => present,
+  }
+
+  rabbitmq_vhost { $vhost: }
+
+  rabbitmq_user { $user:
+    password => $password,
+  }
+
+  rabbitmq_user_permissions { "${user}@${vhost}":
+    configure_permission => '.*',
+    read_permission      => '.*',
+    write_permission     => '.*',
+  }
+
+  rabbitmq_exchange {
+    "mcollective_broadcast@${vhost}":
+      type => 'topic';
+
+    "mcollective_directed@${vhost}":
+      type => 'direct';
   }
 
   case $::operatingsystem {
