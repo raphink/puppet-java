@@ -2,8 +2,8 @@ class generic-tmpl::mw::mcollective::rabbitmq (
   $cluster_disk_nodes = [],
   $erlang_cookie,
   $vhost = '/mcollective',
-  $user = 'mcollective',
-  $password,
+  $user = 'guest',
+  $password = 'guest',
 ) {
 
   # Copy SSL keys to give them the proper rights
