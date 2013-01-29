@@ -17,7 +17,7 @@ class generic-tmpl::mw::mcollective::node {
     /Debian|Ubuntu/: {
 
       apt::preferences {'mcollective':
-        package  => 'mcollective mcollective-common mcollective-client mcollective-doc',
+        package  => 'mcollective mcollective-common mcollective-client mcollective-doc ruby-stomp',
         pin      => 'release o=Camptocamp',
         priority => '1100',
       }
