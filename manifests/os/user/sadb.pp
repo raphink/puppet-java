@@ -45,20 +45,13 @@ define generic-tmpl::os::user::sadb (
     $lastname  = url_get("${sadb}/user/${_username}/lastname")
     $uid       = url_get("${sadb}/user/${_username}/uid_number")
   
-    group {$_username:
-      ensure => $_ensure,
-      gid    => $uid,
-    }
-
     user {$_username:
       ensure     => $_ensure,
       comment    => "${firstname} ${lastname}",
       uid        => $uid,
-      gid        => $uid,
       managehome => true,
       shell      => "/bin/bash",
       groups     => $groups,
-      require    => [ Group[$_username] ],
     }
   }
 
