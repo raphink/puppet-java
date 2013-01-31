@@ -1,6 +1,6 @@
 class generic-tmpl::mw::nagios {
 
-  if ::osfamily == 'Debian' {
+  if $::osfamily == 'Debian' {
 
     $common_packages = [
       'nagios3-core',
