@@ -1,23 +1,37 @@
 class generic-tmpl::mw-git {
 
-  package {"git-core":
-    ensure => purged,
-  }
+  case $::osfamily {
+    'Debian': {
+      package {'git-core':
+        ensure => purged,
+      }
 
-  if $lsbdistcodename == 'lenny' {
-    apt::preferences {["git", "git-email", "gitk", "git-svn"]:
-      pin => "release a=lenny-backports",
-      priority => 1001,
+      if $lsbdistcodename == 'lenny' {
+        apt::preferences {['git', 'git-email', 'gitk', 'git-svn']:
+          pin      => 'release a=lenny-backports',
+          priority => 1001,
+        }
+        package {['git', 'git-email', 'gitk', 'git-svn']:
+          ensure  => present,
+          require => [
+            Package['git-core'],
+            Apt::Preferences['git', 'git-email', 'gitk', 'git-svn'],
+            ],
+        }
+      } else {
+        package {['git', 'git-email', 'gitk', 'git-svn']:
+          ensure  => present,
+          require => Package['git-core'],
+        }
+      }
     }
-
-    package {["git", "git-email", "gitk", "git-svn"]:
-      ensure  => present,
-      require => [Package["git-core"], Apt::Preferences["git", "git-email", "gitk", "git-svn"]],
+    'RedHat': {
+      package {['git', 'git-email', 'gitk', 'git-svn']:
+        ensure => present,
+      }
     }
-  } else {
-    package {["git", "git-email", "gitk", "git-svn"]:
-      ensure  => present,
-      require => Package["git-core"],
+    default: {
+      fail ("Operating system family not supported: '${::osfamily}'")
     }
   }
 }
