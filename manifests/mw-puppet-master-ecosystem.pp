@@ -15,6 +15,7 @@ class generic-tmpl::mw-puppet-master-ecosystem (
   include githubsync
   include git-subtree
   include puppet::lint
+  include generic-tmpl::mw-git
 
   if $::operatingsystem == 'RedHat' and versioncmp($::lsbdistrelease, '6.0') >= 0 {
     $dbadapter = 'mysql2'
@@ -186,10 +187,6 @@ password paipah6Icose1aeD
       'RedHat' => 'gem',
       'Debian' => 'apt',
     },
-  }
-
-  package { 'git-email':
-    ensure => present,
   }
 
   file { '/etc/puppet/irc.yaml':
