@@ -48,6 +48,7 @@ class generic-tmpl::mw::mcollective::rabbitmq (
 
   rabbitmq_plugin { ['amqp_client', 'rabbitmq_stomp']:
     ensure => present,
+    notify => Service['rabbitmq-server'],
   }
 
   rabbitmq_vhost { $vhost: }
