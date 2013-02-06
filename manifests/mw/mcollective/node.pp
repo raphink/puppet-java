@@ -1,5 +1,12 @@
-class generic-tmpl::mw::mcollective::node {
-  include ::mcollective::node
+class generic-tmpl::mw::mcollective::node (
+  $user = undef,
+  $password = undef,
+) {
+
+  class { '::mcollective::node':
+    user     => $user,
+    password => $password,
+  }
 
   $agents = [
     'augeasquery',
