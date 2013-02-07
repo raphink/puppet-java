@@ -207,8 +207,7 @@ password paipah6Icose1aeD
   }
 
   sshd_config { 'AcceptEnv':
-    value  => 'LANG LC_* STOMP_USER STOMP_PASSWORD',
-    notify => Service['ssh'],
+    value  => ['LANG', 'LC_*', 'STOMP_USER', 'STOMP_PASSWORD'],
   }
 
 }
