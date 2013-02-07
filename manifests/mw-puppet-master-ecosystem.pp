@@ -206,4 +206,9 @@ password paipah6Icose1aeD
     mode   => '0755',
   }
 
+  sshd_config { 'AcceptEnv':
+    value  => 'LANG LC_* STOMP_USER STOMP_PASSWORD',
+    notify => Service['ssh'],
+  }
+
 }
