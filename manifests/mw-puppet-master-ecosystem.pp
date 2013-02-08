@@ -10,6 +10,7 @@ class generic-tmpl::mw-puppet-master-ecosystem (
   $ca = false,
   $ssldir = '',
   $certname = '',
+  $reports = 'store,log,irc',
 ) {
 
   include githubsync
@@ -88,7 +89,7 @@ class generic-tmpl::mw-puppet-master-ecosystem (
     notify => Service['puppetmaster'],
   }
 
-  puppet::config { 'master/reports': value => 'store,log,irc' }
+  puppet::config { 'master/reports': value => $reports }
 
   tidy { '/var/lib/puppet/reports':
     age     => $report_log_retention,
