@@ -11,6 +11,8 @@ class generic-tmpl::mw::mcollective::node (
   $security_secret = $::mcollective_psk,
   $security_ssl_private = undef,
   $security_ssl_public = undef,
+  $rpcauthorization = undef,
+  $rpcauthprovider = undef,
 ) {
 
   class { '::mcollective::node':
@@ -26,6 +28,8 @@ class generic-tmpl::mw::mcollective::node (
     security_secret      => $security_secret,
     security_ssl_private => $security_ssl_private,
     security_ssl_public  => $security_ssl_public,
+    rpcauthorization     => $rpcauthorization,
+    rpcauthprovider      => $rpcauthprovider,
   }
 
   $agents = [
