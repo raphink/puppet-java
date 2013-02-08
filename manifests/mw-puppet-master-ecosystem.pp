@@ -84,6 +84,10 @@ class generic-tmpl::mw-puppet-master-ecosystem (
     'francois':   path => '/home/francois';
   }
 
+  c2c_infra::mcollective::client::certificate {
+    'rpinson':;
+  }
+
   Puppet::Config {
     notify => Service['puppetmaster'],
   }
