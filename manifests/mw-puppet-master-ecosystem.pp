@@ -11,6 +11,7 @@ class generic-tmpl::mw-puppet-master-ecosystem (
   $ssldir = '',
   $certname = '',
   $reports = 'store,log,irc',
+  $foreman_url = "https://${::fqdn}",
 ) {
 
   include githubsync
@@ -200,6 +201,14 @@ password paipah6Icose1aeD
 ",
     notify  => Service['puppetmaster'],
     require => Package['carrier-pigeon', 'addressable'],
+  }
+
+  file { '/etc/puppet/foreman.yaml':
+    ensure  => present,
+    content => "---
+:foreman_url: '${foreman_url}'
+",
+    notify  => Service['puppetmaster'],
   }
 
   file { '/usr/local/bin/git-irc-hook.sh':
