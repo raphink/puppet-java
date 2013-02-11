@@ -34,4 +34,8 @@ class generic-tmpl::mw::postgresql (
     }
   }
 
+  package {'pgtune':
+    ensure => present,
+  }
+
 }
