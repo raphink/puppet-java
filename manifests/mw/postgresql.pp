@@ -34,8 +34,11 @@ class generic-tmpl::mw::postgresql (
     }
   }
 
-  package {'pgtune':
-    ensure => present,
+  if  ($::operatingsystem != 'RedHat' or $::lsbmajdistrelease > 4)
+     and ($::operatingsystem != 'Debian' or $::lsbmajdistrelease > 5) {
+    package {'pgtune':
+      ensure => present,
+    }
   }
 
 }
