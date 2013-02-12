@@ -223,4 +223,6 @@ password paipah6Icose1aeD
     value  => ['LANG', 'LC_*', 'STOMP_USER', 'STOMP_PASSWORD'],
   }
 
+  ::puppet::config_version::git { 'default': }
+
 }
