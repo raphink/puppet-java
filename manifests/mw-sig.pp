@@ -86,4 +86,17 @@ class generic-tmpl::mw-sig {
   }
 
   include ::generic-tmpl::backport::proj
+
+  # Stuff needed for tiles generation
+  if $::osfamily == 'Debian' {
+    if $::lsbmajdistrelease >= 6 {  # squeeze or more recent
+      package {['python-mapnik2']:
+        ensure => present,
+      }
+    }
+    package {'osm2pgsql':
+      ensure => present,
+    }
+  }
+
 }
