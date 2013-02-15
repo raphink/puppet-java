@@ -76,7 +76,7 @@ class generic-tmpl::mw-puppet-master-ecosystem (
     'stable27':   path => '/srv/puppetmaster/stable', ensure  => absent;
     'staging':    path => '/srv/puppetmaster/staging';
     'staging27':  path => '/srv/puppetmaster/staging', ensure => absent;
-    'foreman':    path => '/srv/puppetmaster/foreman';
+    'foreman':    path => '/srv/puppetmaster/foreman', ensure => absent;
     'marc':       path => '/home/marc';
     'mbornoz':    path => '/home/mbornoz';
     'cjeanneret': path => '/home/cjeanneret';
