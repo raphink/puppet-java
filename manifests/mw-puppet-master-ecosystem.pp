@@ -201,6 +201,8 @@ password paipah6Icose1aeD
 :irc_ssl: false
 :irc_register_first: false
 :irc_join: false
+:github_user: c2c-irc-reports
+:github_password: uedieshi7phaeX3
 ",
     notify  => Service['puppetmaster'],
     require => Package['carrier-pigeon', 'addressable'],
