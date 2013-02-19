@@ -91,4 +91,10 @@ class generic-tmpl::mw::mcollective::node (
   mcollective::plugin { $agents:
     ensure => present,
   }
+
+  c2c_infra::mcollective::client::certificate {
+    'rpinson':;
+    'mcanevet':;
+  }
+
 }
