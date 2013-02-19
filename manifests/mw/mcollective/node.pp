@@ -103,10 +103,11 @@ class generic-tmpl::mw::mcollective::node (
     default  => '/usr/libexec/mcollective',
   }
   file { "${mcollective_libdir}/mcollective/util":
-    ensure => directory,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
+    ensure  => directory,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    require => Package['mcollective'],
   }
   file { "${mcollective_libdir}/mcollective/util/actionpolicy.rb":
     ensure => file,
