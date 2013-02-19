@@ -36,9 +36,9 @@ class generic-tmpl::mw::mcollective::node (
         source => "${ssl_source_dir}/mco-server.crt";
     }
 
-    $require = File[$ssl_server_private, $ssl_server_public]
+    $requires = File[$ssl_server_private, $ssl_server_public]
   } else {
-    $require = []
+    $requires = []
   }
 
   class { '::mcollective::node':
@@ -58,7 +58,7 @@ class generic-tmpl::mw::mcollective::node (
     rpcauthprovider            => $rpcauthprovider,
     rpcauth_allow_unconfigured => $rpcauth_allow_unconfigured,
     rpcauth_enable_default     => $rpcauth_enable_default,
-    require                    => $require,
+    require                    => $requires,
   }
 
   $agents = [
