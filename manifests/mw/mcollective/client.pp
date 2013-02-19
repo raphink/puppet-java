@@ -30,11 +30,11 @@ class generic-tmpl::mw::mcollective::client (
     security_ssl_client_public  => $security_ssl_client_public,
   }
 
-  file { '/etc/profile.d/mco-client':
+  file { '/etc/profile.d/mco-client.sh':
     ensure  => present,
     owner   => 'root',
     group   => 'root',
-    mode    => '0644',
+    mode    => '0755',
     content => 'export STOMP_USER="$USER"
 export MCOLLECTIVE_SSL_PRIVATE="$HOME/.mc/$USER-private.pem"
 export MCOLLECTIVE_SSL_PUBLIC="$HOME/.mc/$USER.pem"
