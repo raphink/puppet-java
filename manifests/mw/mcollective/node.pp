@@ -15,7 +15,31 @@ class generic-tmpl::mw::mcollective::node (
   $rpcauthprovider = undef,
   $rpcauth_allow_unconfigured = undef,
   $rpcauth_enable_default = undef,
+  $ssl_source_dir = undef,
 ) {
+  if ($security_provider == 'ssl' and $ssl_source_dir) {
+    $ssl_server_private = '/etc/mcollective/ssl/server-private.pem'
+    $ssl_server_public = '/etc/mcollective/ssl/server-public.pem'
+    file {
+      $ssl_server_private:
+        ensure => present,
+        owner  => root,
+        group  => root,
+        mode   => '0600',
+        source => "${ssl_source_dir}/mco-server.key";
+
+      $ssl_server_public:
+        ensure => present,
+        owner  => root,
+        group  => root,
+        mode   => '0644',
+        source => "${ssl_source_dir}/mco-server.crt";
+    }
+
+    $require = File[$ssl_server_private, $ssl_server_public]
+  } else {
+    $require = []
+  }
 
   class { '::mcollective::node':
     broker_host                => $broker_host,
@@ -34,6 +58,7 @@ class generic-tmpl::mw::mcollective::node (
     rpcauthprovider            => $rpcauthprovider,
     rpcauth_allow_unconfigured => $rpcauth_allow_unconfigured,
     rpcauth_enable_default     => $rpcauth_enable_default,
+    require                    => $require,
   }
 
   $agents = [
