@@ -37,7 +37,7 @@ class generic-tmpl::mw::mcollective::client (
     mode    => '0644',
     content => 'export STOMP_USER="$USER"
 export MCOLLECTIVE_SSL_PRIVATE="$HOME/.mc/$USER-private.pem"
-export MCOLLECTIVE_SSL_PUBLIC="$HOME/.mc/$USER-public.pem"
+export MCOLLECTIVE_SSL_PUBLIC="$HOME/.mc/$USER.pem"
 ',
   }
 
