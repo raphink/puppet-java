@@ -7,7 +7,7 @@ class generic-tmpl::mw::mcollective::client (
   $broker_ssl_cert = undef,
   $broker_ssl_key = undef,
   $broker_ssl_ca = undef,
-  $security_provider = 'psk',
+  $security_provider = 'ssl',
   $security_secret = $::mcollective_psk,
   $security_ssl_server_public = undef,
   $security_ssl_client_public = undef,

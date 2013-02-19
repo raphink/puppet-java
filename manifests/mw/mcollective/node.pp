@@ -7,7 +7,7 @@ class generic-tmpl::mw::mcollective::node (
   $broker_ssl_cert = undef,
   $broker_ssl_key = undef,
   $broker_ssl_ca = undef,
-  $security_provider = 'psk',
+  $security_provider = 'ssl',
   $security_secret = $::mcollective_psk,
   $security_ssl_private = undef,
   $security_ssl_public = undef,
