@@ -98,13 +98,13 @@ class generic-tmpl::mw::mcollective::node (
     'RedHat' => '/usr/libexec/mcollective',
     default  => '/usr/libexec/mcollective',
   }
-  file { "${mcollective_libdir}/util":
+  file { "${mcollective_libdir}/mcollective/util":
     ensure => directory,
     owner  => 'root',
     group  => 'root',
     mode   => '0755',
   }
-  file { "${mcollective_libdir}/util/actionpolicy.rb":
+  file { "${mcollective_libdir}/mcollective/util/actionpolicy.rb":
     ensure => file,
     owner  => 'root',
     group  => 'root',
