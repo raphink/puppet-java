@@ -92,4 +92,25 @@ class generic-tmpl::mw::mcollective::node (
     ensure => present,
   }
 
+  # Deploy actionpolicy.rb manually until R.I. Pienaar is done refactoring modules
+  $mcollective_libdir = $::osfamily ? {
+    'Debian' => '/usr/share/mcollective/plugins',
+    'RedHat' => '/usr/libexec/mcollective',
+    default  => '/usr/libexec/mcollective',
+  }
+  file { "${mcollective_libdir}/mcollective/util":
+    ensure => directory,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  }
+  file { "${mcollective_libdir}/mcollective/util/actionpolicy.rb":
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    source => "puppet:///${module_name}/mcollective/actionpolicy.rb",
+    notify => Service['mcollective'],
+  }
+
 }
