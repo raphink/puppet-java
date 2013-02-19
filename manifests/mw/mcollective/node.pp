@@ -92,9 +92,4 @@ class generic-tmpl::mw::mcollective::node (
     ensure => present,
   }
 
-  c2c_infra::mcollective::client::certificate {
-    'rpinson':;
-    'mcanevet':;
-  }
-
 }
