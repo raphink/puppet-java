@@ -35,10 +35,12 @@ class generic-tmpl::mw::mcollective::client (
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
-    content => 'export STOMP_USER="$USER"
+    content => inline_template('<%- unless @broker_user or @broker_user.nil? -%>
+export STOMP_USER="$USER"
+<%- end -%>
 export MCOLLECTIVE_SSL_PRIVATE="$HOME/.mc/$USER-private.pem"
 export MCOLLECTIVE_SSL_PUBLIC="$HOME/.mc/$USER.pem"
-',
+'),
   }
 
   case $::operatingsystem {
