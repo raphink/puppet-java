@@ -12,7 +12,37 @@ class generic-tmpl::mw::mcollective::client (
   $security_ssl_server_public = undef,
   $security_ssl_client_public = undef,
   $security_ssl_client_private = undef,
+  $ssl_source_dir = undef,
 ) {
+
+  if ($security_provider == 'ssl' and $ssl_source_dir) {
+    $_broker_ssl_key = '/etc/mcollective/ssl/mco-client.key'
+    $_broker_ssl_cert = '/etc/mcollective/ssl/mco-client.crt'
+    $_broker_ssl_ca = '/etc/mcollective/ssl/ca.pem'
+    file {
+      $_broker_ssl_key:
+        source => "${ssl_source_dir}/mco-client.key",
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0644';
+
+      $_broker_ssl_cert:
+        source => "${ssl_source_dir}/mco-client.crt",
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0644';
+
+      $_broker_ssl_ca:
+        source => '/var/lib/puppet/ssl/certs/ca.pem',
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0644';
+    }
+  } else {
+    $_broker_ssl_key = $broker_ssl_key
+    $_broker_ssl_cert = $broker_ssl_cert
+    $_broker_ssl_ca = $broker_ssl_ca
+  }
 
   class { '::mcollective::client':
     broker_host                 => $broker_host,
@@ -20,9 +50,9 @@ class generic-tmpl::mw::mcollective::client (
     broker_user                 => $broker_user,
     broker_password             => $broker_password,
     broker_ssl                  => $broker_ssl,
-    broker_ssl_cert             => $broker_ssl_cert,
-    broker_ssl_key              => $broker_ssl_key,
-    broker_ssl_ca               => $broker_ssl_ca,
+    broker_ssl_cert             => $_broker_ssl_cert,
+    broker_ssl_key              => $_broker_ssl_key,
+    broker_ssl_ca               => $_broker_ssl_ca,
     security_provider           => $security_provider,
     security_secret             => $security_secret,
     security_ssl_server_public  => $security_ssl_server_public,
