@@ -1,5 +1,6 @@
 class generic-tmpl::os-sysadmin-analysis {
   package {[
+    'dnsutils',
     'dstat',
     'file',
     'htop',
