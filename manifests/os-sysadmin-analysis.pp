@@ -1,6 +1,5 @@
 class generic-tmpl::os-sysadmin-analysis {
   package {[
-    'dnsutils',
     'dstat',
     'file',
     'htop',
@@ -21,6 +20,7 @@ class generic-tmpl::os-sysadmin-analysis {
   case $::osfamily {
     Debian: {
       package {[
+        'dnsutils',
         'ipcalc',
         'tshark',
         'whois',
