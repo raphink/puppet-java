@@ -36,8 +36,8 @@ class generic-tmpl::os-sysadmin-analysis {
     }
     RedHat: {
       package { $::lsbmajdistrelease ? {
-          '5' => ['sipcalc', 'jwhois'],
-          '6' => ['jwhois'],
+          '5' => ['sipcalc', 'jwhois', 'bind-utils'],
+          '6' => ['jwhois', 'bind-utils'],
         }:
         ensure => present,
       }
