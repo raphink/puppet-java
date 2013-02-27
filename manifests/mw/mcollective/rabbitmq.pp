@@ -70,6 +70,13 @@ class generic-tmpl::mw::mcollective::rabbitmq (
     admin    => true,
   }
 
+  # This is necessary (I'd like to know why really...)
+  rabbitmq_user_permissions { "guest@${vhost}":
+    configure_permission => '.*',
+    read_permission      => '.*',
+    write_permission     => '.*',
+  }
+
   rabbitmq_user_permissions { "${user}@${vhost}":
     configure_permission => '.*',
     read_permission      => '.*',
@@ -80,12 +87,14 @@ class generic-tmpl::mw::mcollective::rabbitmq (
     "mcollective_broadcast@${vhost}":
       type     => 'topic',
       user     => $user,
-      password => $password;
+      password => $password,
+      require  => Rabbitmq_user_permissions["guest@${vhost}"];
 
     "mcollective_directed@${vhost}":
       type     => 'direct',
       user     => $user,
-      password => $password;
+      password => $password,
+      require  => Rabbitmq_user_permissions["guest@${vhost}"];
   }
 
   case $::operatingsystem {
