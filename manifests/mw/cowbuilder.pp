@@ -12,6 +12,7 @@ define generic-tmpl::mw::cowbuilder (
     /lenny/                 => 'MIRRORSITE="http://archive.debian.org/debian"
 ',
     /lucid|oneiric|precise/ => 'MIRRORSITE="http://archive.ubuntu.com/ubuntu"
+COMPONENTS="main universe"
 ',
     default                 => '',
   }
