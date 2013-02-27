@@ -28,7 +28,7 @@ class generic-tmpl::mw::postgresql (
   }
 
   if $::lsbdistcodename =~ /lenny|squeeze/ {
-    apt::preferences {'libpq-dev':
+    apt::preferences {['libpq-dev', 'libpq5']:
       pin      => 'release o=Camptocamp',
       priority => '1100',
     }
