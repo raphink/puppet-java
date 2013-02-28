@@ -54,6 +54,7 @@ class generic-tmpl::mw-puppet-master-ecosystem (
     ensure  => present,
     shell   => '/bin/sh',
     home    => '/var/local/run/githubsync',
+    system  => true,
     #TODO: fix this stupid discrepency !
     groups  => $::domain ? {
       /epfl\.ch$/          => ['admin-puppetmaster'],
