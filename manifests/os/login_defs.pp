@@ -1,6 +1,7 @@
 class generic-tmpl::os::login_defs {
   augeas {'Set first and last uids':
-    context => '/files/etc/login.defs',
+    incl    => '/etc/login.defs',
+    lens    => 'Login_Defs.lns',
     changes => [
       'set UID_MIN 1000',
       'set UID_MAX 60000',
