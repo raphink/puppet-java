@@ -1,6 +1,6 @@
 class generic-tmpl::mw::augeas::debian {
 
-  include ::augeas::debian
+  include ::augeas
 
   $augeas_ruby = $::lsbdistcodename ? {
     'wheezy' => 'libaugeas-ruby1.9.1',
