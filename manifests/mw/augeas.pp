@@ -9,6 +9,8 @@
 #
 class generic-tmpl::mw::augeas {
 
+  include ::augeas
+
   $augeas_version = $::osfamily ? {
     RedHat  => $::lsbmajdistrelease ? {
       6       => "1.0.0-1.el${::lsbmajdistrelease}",
@@ -19,28 +21,15 @@ class generic-tmpl::mw::augeas {
     default => 'present',
   }
 
-  $augeas_ruby_version = $::operatingsystem ? {
-    default => 'present',
-  }
+  if $::osfamily == 'Debian' {
+    $augeas_ruby = $augeas::params::ruby_pkg
+    validate_re($augeas_ruby, '^\S+$')
 
-  case $::osfamily {
-    Debian: {
-      include generic-tmpl::mw::augeas::debian
+    apt::preferences {'augeas':
+      ensure   => present,
+      package  => "augeas-lenses augeas-tools augeas-doc libaugeas0 ${augeas_ruby}",
+      pin      => 'release o=Camptocamp',
+      priority => 1100;
     }
-    RedHat: {
-      include generic-tmpl::mw::augeas::redhat
-    }
-    default: {
-      fail("Unsupported OS family ${::osfamily}")
-    }
-  }
-
-  # remove legacy custom lens location to avoid confusion.
-  # use augeas::lens instead please.
-  file { '/usr/share/augeas/lenses/contrib':
-    ensure  => absent,
-    purge   => true,
-    recurse => true,
-    force   => true,
   }
 }
