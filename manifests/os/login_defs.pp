@@ -8,7 +8,7 @@ class generic-tmpl::os::login_defs {
     ],
   }
 
-  Augeas['Set first and last uids'] -> User <| |>
+  Augeas['Set first and last uids'] -> User <| title != 'root' |>
   Augeas['Set first and last uids'] -> Group <| |>
-  Augeas['Set first and last uids'] -> Package <| |>
+  Augeas['Set first and last uids'] -> Package <| title != 'ruby-augeas' |>
 }
