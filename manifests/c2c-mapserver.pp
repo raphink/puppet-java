@@ -37,10 +37,6 @@ class generic-tmpl::c2c-mapserver inherits mapserver::debian {
         priority => 1001,
       }
 
-      package {'nodejs':
-        ensure => present,
-      }
-
       package {'libgdal1-1.7.0':
         ensure => purged,
       }
