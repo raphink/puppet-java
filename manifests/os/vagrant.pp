@@ -11,6 +11,15 @@ class generic-tmpl::os::vagrant {
       content => 'vagrant ALL=(ALL) ALL',
     }
 
+    file { '/home/vagrant/.ssh':
+      ensure => directory,
+    }
+
+    file { '/home/vagrant/.ssh/authorized_keys':
+      ensure => present,
+      source => 'puppet:///modules/generic-tmpl/vagrant/vagrant_insecure_public_key',
+    }
+
   }
 
 }
