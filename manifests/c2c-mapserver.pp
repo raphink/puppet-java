@@ -1,6 +1,15 @@
-class generic-tmpl::c2c-mapserver inherits mapserver::debian {
+class generic-tmpl::c2c-mapserver (
+  $mapserver_experimental = false,
+) inherits mapserver::debian {
+
+  if ($mapserver_experimental and $lsbdistcodename != 'squeeze') {
+    fail "mapserver_experimental only supported on Debian Squeeze. Sorry"
+  }
 
   include generic-tmpl::os::pkgrepo::sig
+  if $mapserver_experimental {
+    include generic-tmpl::os::pkgrepo::sig_experimental
+  }
 
   case $lsbdistcodename {
     squeeze: {
@@ -26,9 +35,13 @@ class generic-tmpl::c2c-mapserver inherits mapserver::debian {
         priority => 1200,
       }
 
+      $mapserver_component = $mapserver_experimental ? {
+        false => 'sig',
+        true  => 'sig-experimental',
+      }
       apt::preferences{'mapserver':
         package  => 'cgi-mapserver libmapscript-ruby libmapscript-ruby1.8 libmapscript-ruby1.9.1 mapserver-bin mapserver-doc perl-mapscript php5-mapscript python-mapscript',
-        pin => 'release c=sig, o=Camptocamp',
+        pin => "release c=${mapserver_component}, o=Camptocamp",
         priority => 1001,
       }
 

@@ -8,7 +8,9 @@
 #  avec leurs dépendances depuis le repository camptocamp.
 #
 
-class generic-tmpl::mw-sig {
+class generic-tmpl::mw-sig (
+  $mapserver_experimental = false,
+) {
 
   # avoid partial configuration on untested-distribution
   if $lsbdistcodename !~ /^(lenny|squeeze)$/ {
@@ -16,7 +18,11 @@ class generic-tmpl::mw-sig {
   }
 
   case $operatingsystem {
-    Debian:  { include generic-tmpl::c2c-mapserver }
+    Debian:  {
+      class {'generic-tmpl::c2c-mapserver':
+        mapserver_experimental => $mapserver_experimental,
+      }
+    }
     default: { fail "Unsupported operatingsystem ${operatingsystem}" }
   }
 
