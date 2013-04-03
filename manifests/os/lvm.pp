@@ -60,7 +60,7 @@ define generic-tmpl::os::lvm (
     require          => Physical_volume[$physical_volumes],
   }
 
-  Generic-tmpl::Os::Lvm::Partition {volume_group => $name}
+  Generic-tmpl::Os::Lvm::Volume {volume_group => $name}
   create_resources(generic-tmpl::os::lvm::volume, $logical_volumes)
 
 }
