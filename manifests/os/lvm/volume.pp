@@ -1,56 +1,53 @@
 define generic-tmpl::os::lvm::volume (
   $size,
-  $pv,
-  $ensure    = 'present',
-  $vg        = 'vg0',
-  $fstype    = 'ext4',
-  $mountpath = '',
-  $pass      = 2,
-  $dump      = 1
-  ) {
+  $options           = undef,
+  $ensure            = present,
+  $fs_type           = 'ext4',
+  $volume_group      = 'vg0',
+  $mountpath         = "/${name}",
+  $mountpath_require = false,
+){
 
-  $_mountpath = $mountpath ? {
-    ''      => "/${name}",
-    default => $mountpath,
+  validate_bool($mountpath_require)
+
+  if $mountpath_require {
+    Mount {require => File[$mountpath]}
   }
 
-  if !defined(Physical_volume[$pv]) {
-    physical_volume { $pv:
-      ensure => present
-    }
+  $mount_ensure = $ensure ? {
+    'absent'  => absent,
+    default   => mounted,
   }
 
-  if !defined(Volume_group[$vg]){
-    volume_group { $vg:
-      ensure           => present,
-      physical_volumes => $pv,
-      require          => Physical_volume[$pv],
-    }
+  if $ensure == 'present' {
+    Logical_volume[$name] ->
+    Filesystem["/dev/${volume_group}/${name}"] ->
+    Mount[$mountpath]
+  } else {
+    Mount[$mountpath] ->
+    Filesystem["/dev/${volume_group}/${name}"] ->
+    Logical_volume[$name]
   }
 
-  logical_volume { $name:
-    ensure       => present,
-    volume_group => $vg,
+  logical_volume {$name:
+    ensure       => $ensure,
+    volume_group => $volume_group,
     size         => $size,
-    require      => Volume_group[$vg],
   }
 
-  filesystem {"/dev/${vg}/${name}":
-    ensure  => present,
-    fs_type => $fstype,
-    require => Logical_volume[$name],
+  filesystem {"/dev/${volume_group}/${name}":
+    ensure  => $ensure,
+    fs_type => $fs_type,
   }
 
-  mount { $_mountpath:
-    ensure  => mounted,
-    device  => "/dev/${vg}/${name}",
-    fstype  => $fstype,
-    options => 'defaults',
-    pass    => $pass,
-    dump    => $dump,
+  mount {$mountpath:
+    ensure  => $mount_ensure,
+    device  => "/dev/${volume_group}/${name}",
+    fstype  => $fs_type,
+    options => $options,
+    pass    => 2,
+    dump    => 1,
     atboot  => true,
-    require => Filesystem["/dev/${vg}/${name}"],
   }
 
 }
-
