@@ -13,10 +13,14 @@ class generic-tmpl::os::vagrant {
 
     file { '/home/vagrant/.ssh':
       ensure => directory,
+      owner  => 'vagrant',
+      group  => 'vagrant',
     }
 
     file { '/home/vagrant/.ssh/authorized_keys':
       ensure => present,
+      owner  => 'vagrant',
+      group  => 'vagrant',
       source => 'puppet:///modules/generic-tmpl/vagrant/vagrant_insecure_public_key',
     }
 
