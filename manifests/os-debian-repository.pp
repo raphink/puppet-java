@@ -71,17 +71,8 @@ deb http://mirror.switch.ch/ftp/mirror/debian-security/ ${lsbdistcodename}/updat
             }
           }
     
-          apt::sources_list {"c2c-${lsbdistcodename}-${repository}-sysadmin":
-            ensure  => present,
-            content => "deb http://pkg.camptocamp.net/${repository} ${lsbdistcodename} sysadmin\n",
-            require => Apt::Key["5C662D02"],
-          }
-      
-          apt::sources_list {"c2c-${lsbdistcodename}-${repository}-backports":
-            ensure  => present,
-            content => "deb http://pkg.camptocamp.net/${repository} ${lsbdistcodename}-backports main contrib non-free\n",
-            require => Apt::Key["5C662D02"],
-          }
+          include ::generic-tmpl::os::pkgrepo::sysadmin
+          include ::generic-tmpl::os::pkgrepo::backports
         }
     
         /lucid|oneiric|precise|quantal/: {
