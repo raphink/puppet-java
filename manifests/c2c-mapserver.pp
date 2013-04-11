@@ -91,5 +91,9 @@ class generic-tmpl::c2c-mapserver (
         }
       }
     }
+    
+    default: {
+      fail "Support for ${operatingsystem} ${::lsbdistcodename} not yet implemented."
+    }
   }
 }
