@@ -18,12 +18,12 @@ class generic-tmpl::mw::puppetdb::server (
     "/var/cache/java_keys/${server}.crt":
       ensure => present,
       source => $cert_source,
-      before => Openssl::Export::Pkcs12[$server];
+      before => Class['puppetdb::ssl'];
 
     "/var/cache/java_keys/${server}.key":
       ensure => present,
       source => $key_source,
-      before => Openssl::Export::Pkcs12[$server];
+      before => Class['puppetdb::ssl'];
   }
 
   class {'::puppetdb::server':
