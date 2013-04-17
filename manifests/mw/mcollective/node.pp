@@ -40,6 +40,12 @@ class generic-tmpl::mw::mcollective::node (
   } else {
     $requires = []
   }
+  file { ['/etc/mcollective', '/etc/mcollective/ssl']:
+    ensure => 'directory',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  }
 
   class { '::mcollective::node':
     broker_host                => $broker_host,
@@ -73,6 +79,8 @@ class generic-tmpl::mw::mcollective::node (
     'stomputil',
     ]
 
+  include ::mcollective::params
+
   case $::operatingsystem {
     /Debian|Ubuntu/: {
 
@@ -93,6 +101,7 @@ class generic-tmpl::mw::mcollective::node (
       # Until mcollective includes it by default
       package {'mcollective-plugins-uapt':
         ensure  => present,
+        require => $mcollective::params::plugin_require,
         notify  => Exec['reload mcollective'],
       }
 
