@@ -1,4 +1,4 @@
-class generic-tmpl::os-sysadmin-analysis {
+class generic-tmpl::os::sysadmin::analysis {
   package {[
     'dstat',
     'file',
