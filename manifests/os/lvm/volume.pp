@@ -1,6 +1,6 @@
 define generic-tmpl::os::lvm::volume (
   $size,
-  $options           = undef,
+  $options           = 'defaults',
   $ensure            = present,
   $fs_type           = 'ext4',
   $volume_group      = 'vg0',
