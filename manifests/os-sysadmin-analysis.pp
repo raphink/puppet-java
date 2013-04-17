@@ -21,6 +21,7 @@ class generic-tmpl::os-sysadmin-analysis {
     Debian: {
       package {[
         'dnsutils',
+        'iotop',
         'ipcalc',
         'tshark',
         'whois',
@@ -39,6 +40,7 @@ class generic-tmpl::os-sysadmin-analysis {
         # common packages for rhel5,6,…
         package {[
           'bind-utils',
+          'iotop',
           'jwhois',
         ]:
           ensure => present,
