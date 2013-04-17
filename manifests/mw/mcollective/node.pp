@@ -40,6 +40,12 @@ class generic-tmpl::mw::mcollective::node (
   } else {
     $requires = []
   }
+  file { ['/etc/mcollective', '/etc/mcollective/ssl']:
+    ensure => 'directory',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  }
 
   class { '::mcollective::node':
     broker_host                => $broker_host,
