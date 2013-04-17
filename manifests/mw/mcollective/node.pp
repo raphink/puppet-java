@@ -79,6 +79,8 @@ class generic-tmpl::mw::mcollective::node (
     'stomputil',
     ]
 
+  include ::mcollective::params
+
   case $::operatingsystem {
     /Debian|Ubuntu/: {
 
@@ -99,6 +101,7 @@ class generic-tmpl::mw::mcollective::node (
       # Until mcollective includes it by default
       package {'mcollective-plugins-uapt':
         ensure  => present,
+        require => $mcollective::params::plugin_require,
         notify  => Exec['reload mcollective'],
       }
 
