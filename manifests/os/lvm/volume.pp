@@ -1,6 +1,6 @@
 define generic-tmpl::os::lvm::volume (
   $size,
-  $options           = undef,
+  $options           = 'defaults',
   $ensure            = present,
   $fs_type           = 'ext4',
   $volume_group      = 'vg0',
@@ -40,6 +40,10 @@ define generic-tmpl::os::lvm::volume (
     fs_type => $fs_type,
   }
 
+  exec { "ensure mountpoint '${mountpath}' exists":
+    command => "mkdir -p ${mountpath}",
+    unless  => "test -d ${mountpath}",
+  } ->
   mount {$mountpath:
     ensure  => $mount_ensure,
     device  => "/dev/${volume_group}/${name}",
