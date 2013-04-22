@@ -1,4 +1,4 @@
-class generic-tmpl::os-sysadmin-analysis {
+class generic-tmpl::os::sysadmin::analysis {
   package {[
     'dstat',
     'file',
@@ -21,6 +21,7 @@ class generic-tmpl::os-sysadmin-analysis {
     Debian: {
       package {[
         'dnsutils',
+        'iotop',
         'ipcalc',
         'tshark',
         'whois',
@@ -35,11 +36,21 @@ class generic-tmpl::os-sysadmin-analysis {
       }
     }
     RedHat: {
-      package { $::lsbmajdistrelease ? {
-          '5' => ['sipcalc', 'jwhois', 'bind-utils'],
-          '6' => ['jwhois', 'bind-utils'],
-        }:
-        ensure => present,
+      if $::lsbmajdistrelease > 4 {
+        # common packages for rhel5,6,…
+        package {[
+          'bind-utils',
+          'iotop',
+          'jwhois',
+        ]:
+          ensure => present,
+        }
+        # this one seems to be only on rhel5
+        if $::lsbmajdistrelease == 5 {
+          package {['sipcalc']:
+            ensure => present,
+          }
+        }
       }
     }
     default: {
