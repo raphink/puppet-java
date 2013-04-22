@@ -23,8 +23,16 @@ class generic-tmpl::mw::postgresql (
     }
   }
 
+  $plperl_pkg_name = $::osfamily ? {
+    RedHat => $::lsbmajdistrelease ? {
+      5    => 'postgresql84-plperl',
+      6    => 'postgresql-plperl',
+      },
+    default => "postgresql-plperl-${version}",
+  }
   package {"postgresql-plperl-${version}":
     ensure => present,
+    name   => $plperl_pkg_name,
   }
 
   if $::lsbdistcodename =~ /lenny|squeeze/ {
@@ -35,7 +43,7 @@ class generic-tmpl::mw::postgresql (
   }
 
   if  ($::operatingsystem != 'RedHat' or $::lsbmajdistrelease > 4)
-     and ($::operatingsystem != 'Debian' or $::lsbmajdistrelease > 5) {
+      and ($::operatingsystem != 'Debian' or $::lsbmajdistrelease > 5) {
     package {'pgtune':
       ensure => present,
     }
