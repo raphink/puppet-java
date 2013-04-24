@@ -1,5 +1,5 @@
 class generic-tmpl::package-ldaputils {
-  case $::osfamilly {
+  case $::osfamily {
     'Debian': { $pkg_name = 'ldap-utils' }
     'RedHat': { $pkg_name = 'openldap-clients' }
     default: { }

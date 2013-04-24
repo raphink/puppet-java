@@ -1,5 +1,5 @@
 class generic-tmpl::package::emacs {
-  case $::osfamilly {
+  case $::osfamily {
     'Debian': { $pkg_name = 'emacs21-nox' }
     'RedHat': { $pkg_name = 'emacs-nox' }
     default: {}

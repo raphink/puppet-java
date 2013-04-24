@@ -1,5 +1,5 @@
 class generic-tmpl::package::gnupg {
-  if $::libdistmajrelease > 5 {
+  if versioncmp($::lsbmajdistrelease, 5) > 0 {
     $pkg_name = 'gnupg2'
   } else {
     $pkg_name = 'gnupg'

@@ -1,5 +1,5 @@
 class generic-tmpl::package::vim {
-  case $::osfamilly {
+  case $::osfamily {
     'Debian': { $pkg_name = 'vim' }
     'RedHat': { $pkg_name = '' }
     default: { }

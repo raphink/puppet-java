@@ -28,7 +28,7 @@ class generic-tmpl::os::sysadmin::analysis {
         'ipcalc',
         'iptraf',
         'mtr-tiny',
-        'netcat'
+        'netcat',
         'procinfo',
         'tshark',
         'whois',
