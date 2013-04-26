@@ -10,6 +10,11 @@ class generic-tmpl::mw::java::v6 {
       include ::java::v6
     }
 
+    RedHat: {
+      $java16_vendor = 'openjdk'
+      include ::java::v6
+    }
+
     default: {
       fail "OS family not supported ${::osfamily}"
     }
