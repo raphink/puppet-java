@@ -27,17 +27,18 @@ class generic-tmpl::mw::puppetdb::server (
   }
 
   class {'::puppetdb::server':
-    ssl_listen_address => $server,
-    trust_password     => $trust_password,
-    key_password       => $key_password,
-    puppet_ssldir      => '/var/lib/puppet/ssl',
-    ssl_cert           => "/var/cache/java_keys/${server}.crt",
-    ssl_private_key    => "/var/cache/java_keys/${server}.key",
-    ssl_generate_key   => false,
-    database_name      => $database_name,
-    database_username  => $database_username,
-    database_password  => $database_password,
-    require            => [
+    ssl_listen_address     => $server,
+    trust_password         => $trust_password,
+    key_password           => $key_password,
+    puppet_ssldir          => '/var/lib/puppet/ssl',
+    ssl_cert               => "/var/cache/java_keys/${server}.crt",
+    ssl_private_key        => "/var/cache/java_keys/${server}.key",
+    ssl_generate_key       => false,
+    database_name          => $database_name,
+    database_username      => $database_username,
+    database_password      => $database_password,
+    manage_redhat_firewall => false,
+    require                => [
       File["/var/cache/java_keys/${server}.crt"],
       File["/var/cache/java_keys/${server}.key"],
     ]
