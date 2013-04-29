@@ -1,9 +1,9 @@
 class generic-tmpl::os::sysadmin::analysis {
   package {[
     'dstat',
+    'ethtool',
     'file',
     'htop',
-    'iptraf',
     'lsof',
     'ngrep',
     'nmap',
@@ -11,8 +11,10 @@ class generic-tmpl::os::sysadmin::analysis {
     'smartmontools',
     'strace',
     'sysstat',
-    'tiobench',
     'tcpdump',
+    'telnet',
+    'tiobench',
+    'traceroute',
     ]:
     ensure => present,
   }
@@ -20,9 +22,14 @@ class generic-tmpl::os::sysadmin::analysis {
   case $::osfamily {
     Debian: {
       package {[
+        'atop',
         'dnsutils',
         'iotop',
         'ipcalc',
+        'iptraf',
+        'mtr-tiny',
+        'netcat',
+        'procinfo',
         'tshark',
         'whois',
         ]:
@@ -42,12 +49,29 @@ class generic-tmpl::os::sysadmin::analysis {
           'bind-utils',
           'iotop',
           'jwhois',
+          'mtr',
+          'nc',
+          'wireshark',
         ]:
           ensure => present,
         }
-        # this one seems to be only on rhel5
+
         if $::lsbmajdistrelease == 5 {
-          package {['sipcalc']:
+          package {[
+          'atop',
+          'iptraf',
+          'procinfo',
+          'sipcalc',
+          ]:
+            ensure => present,
+          }
+        }
+
+        # this one seems to be only on rhel5
+        if $::lsbmajdistrelease == 6 {
+          package {[
+          'iptraf-ng',
+          ]:
             ensure => present,
           }
         }
