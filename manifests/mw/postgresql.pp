@@ -1,6 +1,7 @@
 class generic-tmpl::mw::postgresql (
   $version,
   $base_dir = undef,
+  $backup = present,
   $backup_dir = undef,
   $backup_format = undef,
 ) {
@@ -11,6 +12,7 @@ class generic-tmpl::mw::postgresql (
   }
 
   class {'::postgresql::backup':
+    ensure        => $backup,
     backup_dir    => $backup_dir,
     backup_format => $backup_format,
   }
