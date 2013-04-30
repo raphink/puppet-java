@@ -1,6 +1,10 @@
-class java {
-  case $::operatingsystem {
-    Debian,Ubuntu,RedHat,CentOS: { include java::v6 }
-    default: { notice "Unsupported operatingsystem ${::operatingsystem}" }
-  }
+# == Class: java
+#
+class java (
+  $vendor = 'openjdk',
+  $version = '6',
+  $package = undef,
+) inherits ::java::params {
+
+  class { '::java::packages': }
 }
