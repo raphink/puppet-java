@@ -1,5 +1,6 @@
 class generic-tmpl::package::install {
   include ::generic-tmpl::package::ackgrep
+  include ::generic-tmpl::package::colordiff
   include ::generic-tmpl::package::curl
   include ::generic-tmpl::package::cvs
   include ::generic-tmpl::package::dos2unix
