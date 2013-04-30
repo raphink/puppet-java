@@ -5,19 +5,8 @@ class generic-tmpl::mw-devel {
     "libxml2-utils": ensure => present; # xml utilities
     "pyflakes":      ensure => present; # python static code checker
     "pylint":        ensure => present; # python static code checker
-    'colordiff':     ensure => present; # tool to colorize 'diff' output
   }
 
-  if $::lsbdistcodename == 'squeeze' {
-    # tmux from squeeze backports
-    apt::preferences {'tmux':
-      pin      => 'release a=squeeze-backports',
-      priority => 1100,
-    }
-    package {'tmux':
-      ensure => present,
-    }
-  }
 
   if versioncmp($::lsbmajdistrelease, '6') >= 0 {
     package {
